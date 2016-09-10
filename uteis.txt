@@ -1,0 +1,11 @@
+Icones e sprites
+	http://game-icons.net/
+	http://kenney.nl/
+	http://opengameart.org/
+
+	Tutorial
+	https://www.learneroo.com/modules/139/nodes/727
+	https://developers.google.com/blockly/guides/get-started/web
+	
+
+
