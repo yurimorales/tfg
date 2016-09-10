@@ -3,9 +3,12 @@ Icones e sprites
 	http://kenney.nl/
 	http://opengameart.org/
 
-	Tutorial
+Blockly
 	https://www.learneroo.com/modules/139/nodes/727
 	https://developers.google.com/blockly/guides/get-started/web
+
+Git e GitHub
+	http://codexico.com.br/blog/linux/tutorial-simples-como-usar-o-git-e-o-github/
 	
 
 
