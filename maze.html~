@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="guildo-game" value="notranslate">
+  <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Guildo game development.">
+  <title>Guildo Game</title>
+  <link rel="stylesheet" href="common/common.css">
+  <link rel="stylesheet" href="maze/style.css">
+</head>
+<body>
+</body>
+<script>
+    // Single-language bootloader.
+    (function() {
+	// Application path.
+	var appName = location.pathname.match(/\/([-\w]+)(\.html)?$/);
+
+	appName = appName ? appName[1].replace('-', '/') : 'index';
+
+  	// Only one language.
+	var lang = 'pt-br';
+	window['BlocklyGamesLanguages'] = [lang];
+	window['BlocklyGamesLang'] = lang;
+	
+	// Load the language pack.
+	var script = document.createElement('script');
+	script.src = appName + '/generated/' + lang + '/compressed.js';
+
+	script.type = 'text/javascript';
+	document.head.appendChild(script);
+
+    })();
+  </script>
+</html>
