@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="guildo-game" value="notranslate">
+  <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="Guildo game development.">
+  <title>Guildo Game</title>
+  <link rel="stylesheet" href="assets/components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/initial.css">
+  <link rel="stylesheet" href="assets/css/personagens.css">
+</head>
+<body>
+<div class="container">
+	<h2>Guildo Game - Fase 1</h2>
+	<div class="row">
+		<div class="col-md-6">
+			<canvas id="canvas" width="570" height="600" style="background:rgb(233,233,233)">
+				Se você visualizar esse texto, seu browser não suporta a tag canvas.
+			</canvas>
+		</div>
+
+		<div class="col-md-1 separador"></div><!-- divisor entre interface de jogo e caixa com comandos do blockly -->
+
+		<div class="col-md-5">
+			<div id="blocklyDiv"></div>
+			<xml id="toolbox" style="display: none">
+				<block type="controls_if"></block>
+				<block type="controls_repeat_ext"></block>
+				<block type="logic_compare"></block>
+				<block type="math_number"></block>
+				<block type="math_arithmetic"></block>
+				<block type="text"></block>
+				<block type="text_print"></block>
+			</xml>
+		</div>
+	</div>
+
+	<div class="row"></div>
+
+	<!-- Botões de ações do jogo -->
+	<div class="row">
+		<div class="col-sm-6"></div>
+		<div class="col-sm-6 botoes-acoes">
+			<button type="button" class="btn btn-success"><i class="glyphicon glyphicon-play"></i> Iniciar</button>
+			<button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-stop"></i> Parar</button>
+			<button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> Recarregar</button>
+		</div>
+	</div>
+
+	<div class="row"></div>
+
+</div>
+<script src="assets/components/jquery/dist/jquery.min.js"></script>
+<script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="assets/components/google-blockly/blockly_compressed.js"></script>
+<script src="assets/components/google-blockly/blocks_compressed.js"></script>
+<script src="assets/components/google-blockly/msg/js/pt-br.js"></script>
+<script src="assets/js/script.js"></script>
+
+<script>
+	//Load commandos do blockly
+  var workspace = Blockly.inject('blocklyDiv',
+      {toolbox: document.getElementById('toolbox')});
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+#blocklyDiv{
+	position:absolute;
+}
+#blocklyDiv{
+	height:480px;
+	width:500px;
+}
+.separador{
+	height:480px;
+	width: 50px;
+	background-color: #fff;	
+}
+.botoes-acoes{
+	margin: 10px 0 10px 0;
+}

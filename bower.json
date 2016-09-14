@@ -1,7 +1,7 @@
 {
   "name": "Guildo-game",
   "description": "Game play adventure to learn programing algorithms",
-  "main": "assets/scripts/main.js",
+  "main": "",
   "keywords": [
     "guildo",
     "game"
@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "jquery": "^3.1.0",
-    "google-blockly": "*"
+    "google-blockly": "*",
+    "bootstrap": "*"
   }
 }
