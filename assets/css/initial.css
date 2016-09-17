@@ -11,5 +11,7 @@
 	background-color: #fff;	
 }
 .botoes-acoes{
+	position:relative;
+	bottom: 0;
 	margin: 10px 0 10px 0;
 }
