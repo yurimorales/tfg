@@ -2,6 +2,7 @@ Icones e sprites
 	http://game-icons.net/
 	http://kenney.nl/
 	http://opengameart.org/
+	http://spritedatabase.net/
 
 Blockly
 	https://www.learneroo.com/modules/139/nodes/727
@@ -9,7 +10,7 @@ Blockly
 
 Projetos
 	https://techkim.wikispaces.com/coding
-        http://digipiph.com/digipiph-game-manager
+    http://digipiph.com/digipiph-game-manager
 
 Git e GitHub
 	http://rogerdudler.github.io/git-guide/index.pt_BR.html

@@ -1,7 +1,23 @@
 #guildo{
-	width: 150px;
-	height: 150px;
-	background-image: url('../images/01b.png');
-	background-repeat: no-repeat;
-	background-position: 0 0;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 32px;
+	height: 32px;
+	background: url('../../images/guildo.png') no-repeat;
 }
+#guildo.front-right { background-position: 0px 0px; }
+#guildo.front-stand { background-position: -32px 0px; }
+#guildo.front-left { background-position: -64px 0px; }
+
+#guildo.left-right { background-position: 0px -32px; }
+#guildo.left-stand { background-position: -32px -32px; }
+#guildo.left-left { background-position: -64px -32px; }
+
+#guildo.right-right { background-position: -64px -64px; }
+#guildo.right-stand { background-position: -32px -64px; }
+#guildo.right-left { background-position: -0px -64px; }
+
+#guildo.back-right { background-position: 0px -96px; }
+#guildo.back-stand { background-position: -32px -96px; }
+#guildo.back-left { background-position: -64px -96px; }
