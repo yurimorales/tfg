@@ -1,4 +1,19 @@
-#blocklyDiv{
+#fase{
+	position: relative;
+	width: 640px;
+	height: 480px;
+	margin: auto auto;
+	border: solid 2px #000;
+	overflow: hidden;
+}
+#mapa{
+	position: absolute;
+	width: 800px;
+	height: 800px;
+	background: url('../../images/map.jpg') no-repeat 0px 0px;	
+}
+
+/*#blocklyDiv{
 	position:absolute;
 	height:480px;
 	width:500px;
@@ -12,18 +27,4 @@
 	position:relative;
 	bottom: 0;
 	margin: 10px 0 10px 0;
-}
-#fase{
-	position: relative;
-	width: 640px;
-	height: 480px;
-	margin: auto auto;
-	border: solid 2px #000;
-	overflow: hidden;
-}
-#mapa{
-	position: absolute;
-	width: 800px;
-	height: 800px;
-	background: url('../../images/background-cenario-castelo.jpeg') no-repeat 0px 0px;	
-}
+}*/
