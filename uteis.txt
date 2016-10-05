@@ -4,6 +4,11 @@ Icones e sprites
 	http://opengameart.org/
 	http://spritedatabase.net/
 
+Tutorial jogo
+	https://alexandreaquiles.com.br/2016/02/25/criando-um-jogo-em-javascript-1/
+	http://digipiph.com/tags/sprite-movement
+	http://jlongster.com/Making-Sprite-based-Games-with-Canvas
+
 Blockly
 	https://www.learneroo.com/modules/139/nodes/727
 	https://developers.google.com/blockly/guides/get-started/web
@@ -19,10 +24,10 @@ Git e GitHub
 	http://codexico.com.br/blog/git/tutorial-simples-parte-2-git-branch-e-merge/
 
 Sons:
-https://www.freesound.org/ (sons p/ o game)
+	https://www.freesound.org/ (sons p/ o game)
 
 Paisagens:
-http://opengameart.org/content/16x16-game-assets (tilesets)
-http://opengameart.org/content/rpg-tilesets-0 (topdown.png)
-http://kenney.nl/assets/isometric-roads (roadtiles_nova)
+	http://opengameart.org/content/16x16-game-assets (tilesets)
+	http://opengameart.org/content/rpg-tilesets-0 (topdown.png)
+	http://kenney.nl/assets/isometric-roads (roadtiles_nova)
 

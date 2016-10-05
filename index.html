@@ -7,23 +7,32 @@
 	<meta name="description" content="Guildo game development.">
 	<title>Guildo Game</title>
 	<link rel="stylesheet" href="assets/components/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/css/initial.css">
+	<link rel="stylesheet" href="assets/css/init.css">
 	<link rel="stylesheet" href="assets/css/personagens.css">
 </head>
 <body>
 <div class="container">
-	<h2>Guildo Game - Fase 1</h2>
-	<div class="row">
-		<div class="col-md-6">
-			<!--<canvas id="canvas" width="570" height="600" style="background:rgb(233,233,233)">
-				Se você visualizar esse texto, seu browser não suporta a tag canvas.
-			</canvas>!-->
-			<div id="guildo"></div>
+	<h2>Guildo Game</h2>
+	
+	<div class="col-md-8">
+
+		<div style="width: 400px; margin: 0 auto;">
+			<div style="float:left;">Pos: </div>
+			<div id="left" style="float:left;"></div>
+			<div style="float:left;">:</div>
+			<div id="top" style="float: left;"></div>
 		</div>
 
-		<div class="col-md-1 separador"></div><!-- divisor entre interface de jogo e caixa com comandos do blockly -->
+		<div class="fase">
+			<div id="guildo"></div>
+			<div id="mapa"></div>
+		</div>
+	</div>
 
-		<div class="col-md-5">
+	<!-- <div class="col-md-1 separador"></div> -->
+		<!-- divisor entre interface de jogo e caixa com comandos do blockly -->
+
+		<!-- <div class="col-md-5">
 			<div id="blocklyDiv"></div>
 			<xml id="toolbox" style="display: none">
 				<block type="controls_if"></block>
@@ -34,18 +43,17 @@
 				<block type="text"></block>
 				<block type="text_print"></block>
 			</xml>
-		</div><!-- .col-md-5 -->
-	</div><!-- .row -->
-
+		</div> -->
+	
 	<!-- Botões de ações do jogo -->
-	<div class="row">
+	<!-- <div class="row">
 		<div class="col-sm-6 botoes-acoes">
 			<button type="button" class="btn btn-success"><i class="glyphicon glyphicon-play"></i> Iniciar</button>
 			<button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-stop"></i> Parar</button>
 			<button type="button" class="btn btn-danger"><i class="glyphicon glyphicon-refresh"></i> Recarregar</button>
 			<button type="button" class="btn btn-default"><i class="glyphicon glyphicon-cog"></i> Configurações</button>
 		</div>
-	</div> <!-- .row -->
+	</div> -->
 
 </div>
 <script src="assets/components/jquery/dist/jquery.min.js"></script>
@@ -53,44 +61,36 @@
 <script src="assets/components/google-blockly/blockly_compressed.js"></script>
 <script src="assets/components/google-blockly/blocks_compressed.js"></script>
 <script src="assets/components/google-blockly/msg/js/pt-br.js"></script>
-<!--<script src="assets/js/script.js"></script>-->
+<script src="assets/js/script.js"></script>
 <script>
 
 	// Carrega commandos do blockly
-	var workspace = Blockly.inject('blocklyDiv',
-    {
+	var workspace = Blockly.inject('blocklyDiv',{
     	toolbox: document.getElementById('toolbox')
     });
 
-	//Referência: http://digipiph.com/blog/creating-sprite-character-movement-javascript-and-jquery-ver-10
-	//Data: 18/09/16
-
-    //Global variables that will be accessed in the functions below.
-	var currentKey; // records the current key pressed
-	var TimerWalk; // timer handle
-	var charStep = 2; // 1=1st foot, 2=stand, 3=2nd foot, 4=stand
-	var charSpeed = 400; // how fast the character will move
-
     $(document).ready(function(){
-    	
+    	//load character state
 		$('#guildo').addClass('front-stand');
+		$('#top').html(charY);
+		$('#left').html(charX);	
 
     });
 
     //keyDown Function
 	$(document).keydown(function(e){
 
-		if (!currentKey) {
+		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
 
 			//set the currentKey to the key that is down
 			currentKey = e.keyCode;
-			//execute character movement function charWalk('direction')
-			switch(currentKey) {
+			//execute character movement function moveChar('direction')
+			switch(e.keyCode) {
 
-				case 38: charWalk('up');    break;
-				case 39: charWalk('right'); break;
-				case 40: charWalk('down');  break;
-				case 37: charWalk('left');  break;
+				case 38: moveChar('up');    break;
+				case 39: moveChar('right'); break;
+				case 40: moveChar('down');  break;
+				case 37: moveChar('left');  break;
 
 			}
 
@@ -104,84 +104,11 @@
 		//don't stop the walk if the player is pushing other buttons
 		//only stop the walk if the key that started the walk is released
 		if (e.keyCode == currentKey) {
-
-		  //set the currentKey to false, this will enable a new key to be pressed
-		  currentKey = false;
-
-		  //clear the walk timer
-		  clearInterval(TimerWalk);
-
-		  //finish the character's movement
-		  $('#guildo').stop(true, true);
-
+			//set the currentKey to false, this will enable a new key to be pressed
+			currentKey = false;
 		}
 
 	});
-
-	//Character Walk Function
-	function charWalk(dir) {
-
-		//adjust from lang to code
-		if (dir == 'up') dir = 'back';
-		if (dir == 'down') dir = 'front';
-
-		//move the character
-		processWalk(dir);
-
-		//set the interval timer to continually move the character
-		TimerWalk = setInterval(function() { processWalk(dir); }, charSpeed);
-
-	}
- 
-	//Process Character Walk Function
-	function processWalk(dir) {
-
-		//increment the charStep as we will want to use the next stance in the animation
-		//if the character is at the end of the animation, go back to the beginning
-		charStep++;
-		if (charStep == 5) charStep = 1;
-
-		//remove the current class
-		$('#guildo').removeAttr('class');
-
-		//add the new class
-		switch(charStep) {
-			case 1: $('#guildo').addClass(dir+'-stand'); break;
-			case 2: $('#guildo').addClass(dir+'-right'); break;
-			case 3: $('#guildo').addClass(dir+'-stand'); break;
-			case 4: $('#guildo').addClass(dir+'-left');  break;
-		}
-
-		//move the char
-		//we will only want to move the guildo 32px (which is 1 unit) in any direction
-		switch(dir) {
-
-			case'front':
-		    	$('#guildo').animate({top: '+=32'}, charSpeed);
-		    	break;
-
-	  		case'back':
-		    	//don't let the character move any further up if they are already at the top of the screen
-		    	if ($('#guildo').position().top > 0) {
-		      		$('#guildo').animate({top: '-=32'}, charSpeed);
-		    	}
-		    	break;
-
-			case'left':
-		  		//don't let the character move any further left if they are already at the left side of the screen  
-		  		if ($('#guildo').position().left > 0) {
-		      		$('#guildo').animate({left: '-=32'}, charSpeed);
-		    	}
-		    	break;
-
-	  		case'right':
-		    	$('#guildo').animate({left: '+=32'}, charSpeed);
-		    	break;
-
-	  	}
-
-	}
-
 
 </script>
 </body>
