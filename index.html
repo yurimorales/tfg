@@ -11,37 +11,30 @@
 	<link rel="stylesheet" href="assets/css/personagens.css">
 </head>
 <body>
-<div class="container"> 
-	<!-- <h2>Guildo Game</h2> -->
-		
-		<div id="fase">
-			<div id="guildo"></div>
-			<div id="mapa"></div>
-		</div>
+<div class="container">
+	
+	<div id="fase">
+		<div id="guildo"></div>
+		<div id="mapa"></div>
+	</div>
 
-		<div style="width: 400px; margin: auto auto;">
-			<div style="float:left;">Pos: </div>
-			<div id="left" style="float:left;"></div>
-			<div style="float:left;">:</div>
-			<div id="top" style="float: left;"></div>
-		</div>
-
-	<!-- <div class="col-md-1 separador"></div> -->
-		<!-- divisor entre interface de jogo e caixa com comandos do blockly -->
-
-		<!-- <div class="col-md-5">
-			<div id="blocklyDiv"></div>
-			<xml id="toolbox" style="display: none">
-				<block type="controls_if"></block>
-				<block type="controls_repeat_ext"></block>
-				<block type="logic_compare"></block>
-				<block type="math_number"></block>
-				<block type="math_arithmetic"></block>
-				<block type="text"></block>
-				<block type="text_print"></block>
-			</xml>
-		</div> -->
-		
+	<div class="showPosition">
+		<div>Pos:</div>
+		<div id="left"></div>
+		<div>:</div>
+		<div id="top"></div>
+	</div>
+	
+	
+	<div id="blocklyDiv"></div>
+	<xml id="toolbox" style="display: none">
+	 	<block type="controls_if"></block>
+  		<block type="controls_whileUntil"></block>
+  		<block type="text"></block>
+		<block type="text_print"></block>
+	</xml>
+	
+	
 	<!-- Botões de ações do jogo -->
 	<!-- <div class="row">
 		<div class="col-sm-6 botoes-acoes">
@@ -52,26 +45,29 @@
 		</div>
 	</div> -->
 
-</div>
+</div><!-- .container -->
+
 <script src="assets/components/jquery/dist/jquery.min.js"></script>
 <script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- <script src="assets/components/google-blockly/blockly_compressed.js"></script>
+<script src="assets/components/google-blockly/blockly_compressed.js"></script>
 <script src="assets/components/google-blockly/blocks_compressed.js"></script>
-<script src="assets/components/google-blockly/msg/js/pt-br.js"></script> -->
+<script src="assets/components/google-blockly/javascript_compressed.js"></script>
+<script src="assets/components/google-blockly/msg/js/pt-br.js"></script>
 <script src="assets/js/script.js"></script>
 <script type="text/javascript">
 	
 	//Carrega commandos do blockly
-	// var workspace = Blockly.inject('blocklyDiv',{
-	// 	toolbox: document.getElementById('toolbox')
-	// });
-
+	
+	var workspace = Blockly.inject('blocklyDiv',{
+		toolbox: document.getElementById('toolbox')
+	});
+	
+	
     $(document).ready(function(){
-		//load character state
+		//Carrega estado atual do personagem
 		$('#guildo').addClass('front-stand');
 		$('#top').html(charY);
-		$('#left').html(charX);	
-
+		$('#left').html(charX);
     });
 
     //keyDown Function

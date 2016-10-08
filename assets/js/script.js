@@ -1,7 +1,7 @@
-//Global variables that will be accessed in the functions below.
-var currentKey; // records the current key pressed
+//Variáveis globais
+var currentKey; // Armazena opção atual de comando informado(via teclado "teclas direcionais")
 var charStep = 2; // 1=1st foot, 2=stand, 3=2nd foot, 4=stand
-var charSpeed = 400; // how fast the character will move
+var charSpeed = 400; // Velocidade de caminhada do personage,
 
 var charX = 4; // 1 unit = 32px
 var charY = 6; // 1 unit = 32px
@@ -25,10 +25,10 @@ function moveChar(dir) {
 	charStep++;
 	if (charStep == 5) charStep = 1;
 
-	//remove the current class
+	//Remove classe atual do personagem
 	$('#guildo').removeAttr('class');
 
-	//add the new class
+	//Adiciona nova classe
 	switch(charStep) {
 
 		case 1: 

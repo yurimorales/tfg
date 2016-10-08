@@ -1,11 +1,14 @@
 #fase{
 	position: relative;
+	float: left;
+	top: 50px;
 	width: 640px;
 	height: 480px;
-	margin: auto auto;
+	margin: 10px 0 0 0;
 	border: solid 2px #000;
 	overflow: hidden;
 }
+
 #mapa{
 	position: absolute;
 	width: 800px;
@@ -13,16 +16,27 @@
 	background: url('../../images/map.jpg') no-repeat 0px 0px;	
 }
 
-/*#blocklyDiv{
-	position:absolute;
-	height:480px;
-	width:500px;
+.showPosition{
+	position: fixed;
+	width: 400px;
+	margin: 0 auto;
+	height: 30px;
+	top: 20px;
 }
-.separador{
-	height:480px;
-	width: 50px;
-	background-color: #fff;	
+
+.showPosition div{
+	float: left;
 }
+
+#blocklyDiv{
+	position: absolute;
+	top: 60px;
+	right: 0;
+	margin-right: 50px;
+	width: 500px;
+	height: 480px;
+}	
+/*
 .botoes-acoes{
 	position:relative;
 	bottom: 0;
