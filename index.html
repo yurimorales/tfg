@@ -58,7 +58,8 @@
 	
 	//Carrega commandos do blockly
 	
-	var workspace = Blockly.inject('blocklyDiv',{
+	var blocklyDiv = document.getElementById('blocklyDiv');
+	var workspace = Blockly.inject(blocklyDiv,{
 		toolbox: document.getElementById('toolbox')
 	});
 	
