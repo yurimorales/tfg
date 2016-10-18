@@ -28,13 +28,14 @@
 	float: left;
 }
 
-#blocklyDiv{
+#DivBlockly{
 	position: absolute;
-	top: 60px;
-	right: 0;
-	margin-right: 50px;
-	width: 500px;
-	height: 480px;
+	top:60px;
+	right:10px;
+
+	margin-right:20px;
+	width:500px;
+	height:480px;
 }	
 /*
 .botoes-acoes{

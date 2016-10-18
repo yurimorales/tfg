@@ -26,16 +26,20 @@
 	</div>
 	
 	
-	<div id="blocklyDiv"></div>
+	<div id="DivBlockly"></div>
 	<xml id="toolbox" style="display: none">
-	 	<block type="controls_if"></block>
-  		<block type="controls_whileUntil"></block>
-  		<block type="text"></block>
-		<block type="text_print"></block>
+		<category name="Comandos">
+			<!-- <block type="start"></block> -->
+			<category name="Mover">
+				<block type="move_right"></block>
+				<!-- <block type="move_left"></block>
+				<block type="move_top"></block>
+				<block type="move_bottom"></block> -->
+			</category>
+		</category>
 	</xml>
 	
-	
-	<!-- Botões de ações do jogo -->
+	<!-- Botões de ações do jogo
 	<!-- <div class="row">
 		<div class="col-sm-6 botoes-acoes">
 			<button type="button" class="btn btn-success"><i class="glyphicon glyphicon-play"></i> Iniciar</button>
@@ -46,24 +50,54 @@
 	</div> -->
 
 </div><!-- .container -->
-
 <script src="assets/components/jquery/dist/jquery.min.js"></script>
 <script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/components/google-blockly/blockly_compressed.js"></script>
 <script src="assets/components/google-blockly/blocks_compressed.js"></script>
-<script src="assets/components/google-blockly/javascript_compressed.js"></script>
 <script src="assets/components/google-blockly/msg/js/pt-br.js"></script>
 <script src="assets/js/script.js"></script>
 <script type="text/javascript">
 	
-	//Carrega commandos do blockly
+	//Load dos commandos do blockly
+	var toolbox = document.getElementById('toolbox');
+	var workspace = Blockly.inject('DivBlockly',{toolbox: toolbox});
 	
-	var blocklyDiv = document.getElementById('blocklyDiv');
-	var workspace = Blockly.inject(blocklyDiv,{
-		toolbox: document.getElementById('toolbox')
-	});
-	
-	
+
+	Blockly.Blocks['move_right'] = {
+	  init: function() {
+	    this.appendValueInput("PIXELS")
+	        .setCheck("Number")
+	        .appendField("Mover para direita");
+	    this.setInputsInline(true);
+	    this.setPreviousStatement(true, null);
+	    this.setNextStatement(true, null);
+	    this.setColour(290);
+	    this.setTooltip('');
+	    this.setHelpUrl('http://www.google.com/');
+	  }
+	};
+
+	Blockly.JavaScript['move_right'] = function(block) {
+	  var value_pixels = Blockly.JavaScript.valueToCode(block, 'PIXELS', Blockly.JavaScript.ORDER_ATOMIC);
+	  // TODO: Assemble JavaScript into code variable.
+	  var codeMoveRight = "$(\"#moveDiv\").animate({\n " + 
+	                        "left: \"+=" + value_pixels + "px\"\n" +
+	                      "},1000);\n";  
+		// You can show a blockly warning
+	    if( value_pixels >= 300 ) block.setWarningText("You get it!");
+
+	    // Or you can store its value elsewere...
+	    // myExternalVar = value_pixels;
+
+  		return codeMoveRight;
+	};
+
+	var xml = Blockly.Xml.workspaceToDom(workspace);
+	var xml_text = Blockly.Xml.domToText(xml); 
+	console.log(xml_text);
+
+	// Funcoes e scripts inerentes do personagem
+	// e mapas do jogo
     $(document).ready(function(){
 		//Carrega estado atual do personagem
 		$('#guildo').addClass('front-stand');
@@ -76,9 +110,9 @@
 
 		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
 
-			//set the currentKey to the key that is down
+			//Define a Key atual
 			currentKey = e.keyCode;
-			//execute character movement function moveChar('direction')
+			//Executa a função de movimento do personagem moveChar("<direcao a ser tomada>")
 			switch(e.keyCode) {
 
 				case 38: moveChar('up');    break;
@@ -95,14 +129,15 @@
 	//KeyUp Function
 	$(document).keyup(function(e) {
 
-		//don't stop the walk if the player is pushing other buttons
-		//only stop the walk if the key that started the walk is released
+		// Não para a caminhada se o jogador está pressionando outros botões
+		// Só param a caminhada se a chave que começou a caminhada é liberado
 		if (e.keyCode == currentKey) {
-			//set the currentKey to false, this will enable a new key to be pressed
+			//Define a chave atual como false, isso permite uma nova chave p/ ser informada
 			currentKey = false;
 		}
 
 	});
+
 </script>
 </body>
 </html>

@@ -3,22 +3,21 @@ var currentKey; // Armazena opção atual de comando informado(via teclado "tecl
 var charStep = 2; // 1=1st foot, 2=stand, 3=2nd foot, 4=stand
 var charSpeed = 400; // Velocidade de caminhada do personage,
 
-var charX = 4; // 1 unit = 32px
-var charY = 6; // 1 unit = 32px
+var charX = 4; //1 unit = 32px
+var charY = 6; //1 unit = 32px
 
 var stageWidth = 640;
 var stageHeight = 480;
 var mapWidth = 800;
 var mapHeight = 800;
 
-//Character Walk Function
+//Funçao movimenta personagem
 function moveChar(dir) {
 
-	//a player could switch key mid-animation
-	//record the key that was down when animation started
+	//Armazena key inicial de animacao
 	var currentKeyCheck = currentKey;
 
-	//adjust from lang to code
+	//ajuste por parte da longitude, via codifo
 	if (dir == 'up') dir = 'back';
 	if (dir == 'down') dir = 'front';
 
@@ -104,7 +103,7 @@ function moveChar(dir) {
 			break;
 	}
  
-	//move the char
+	//move personagem conforme direcao setada
 	switch(dir) {
 
 		case 'front':
@@ -184,16 +183,16 @@ function moveChar(dir) {
 
 	}
 
-}// end function moveChar()
+}// fim da function moveChar()
 
 function chkMove(dir) {
 
     switch(dir) {
 
 	  case'front':
-		// if the character is greater than or equal to 64px from the bottom of the stage
-		// AND the character is not less than or equal to 64px from the top of the stage
-		// AND the "map" graphic is not at the bottom
+		//Se o personagem é maior do que ou igual a 64px a partir do fundo do mapa
+		//E o personagem não é menos do que ou igual a 64px a partir do topo da fase
+		//E o "mapa" gráfico não é na parte inferior
 		if ($('#guildo').position().top <= (stageHeight - 64) 
 		    && $('#guildo').position().top >= 64
 		    && (Math.abs($('#mapa').position().top) + stageHeight) < mapHeight) {
@@ -206,9 +205,9 @@ function chkMove(dir) {
 	    break;
 
 	  case'back':
-		// if the character is greater than or equal to 64px from the bottom of the stage
-		// AND the character is not less than or equal to 64px from the top of the stage
-		// AND the "map" graphic is not at it's top
+		//Se o personagem é maior do que ou igual a 64px a partir do fundo do mapa
+		//E o personagem não é menos do que ou igual a 64px a partir do topo da fase
+		//E o "mapa" gráfico não é na parte superior
 		if ($('#guildo').position().top >= 64 
 	      && $('#guildo').position().top < (stageHeight - 64)
 		  && $('#mapa').position().top < 0) {
@@ -221,9 +220,9 @@ function chkMove(dir) {
 	    break;
 
 	  case'left':
-	    // if the character is greater than or equal to 64px from the left of the stage
-		// AND the character is not less than or equal to 64px from the right of the stage
-		// AND the "map" graphic is not at the right
+	    //Se o personagem é maior do que ou igual a 64px a partir da esquerda da fase
+		//E o personagem não é menos do que ou igual a 64px da direita da fase
+		//E o "mapa" gráfico não é à direita
 		if ($('#guildo').position().left < (stageWidth - 64) 
 		    && $('#guildo').position().left >= 64
 		    && $('#mapa').position().left < 0) {
@@ -236,9 +235,9 @@ function chkMove(dir) {
 	    break;
 
 	  case'right':
-	    // if the character is greater than or equal to 64px from the left of the stage
-		// AND the character is not less than or equal to 64px from the right of the stage
-		// AND the "map" graphic is not at the left
+	    //Se o carácter é maior do que ou igual a 64px a partir da esquerda da fase
+		//E o carácter não é menos do que ou igual a 64px da direita da fase
+		//E o "mapa" gráfico não está à esquerda
 		if ($('#guildo').position().left <= (stageWidth - 64) 
 		    && $('#guildo').position().left >= 64
 		    && (Math.abs($('#mapa').position().left) + stageWidth) < mapWidth) {
@@ -252,4 +251,4 @@ function chkMove(dir) {
 
 	}
 
-}// end function chkMove()
+}// fim da function chkMove()
