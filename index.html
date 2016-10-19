@@ -28,15 +28,13 @@
 	
 	<div id="DivBlockly"></div>
 	<xml id="toolbox" style="display: none">
-		<category name="Comandos">
-			<!-- <block type="start"></block> -->
-			<category name="Mover">
-				<block type="move_right"></block>
-				<!-- <block type="move_left"></block>
-				<block type="move_top"></block>
-				<block type="move_bottom"></block> -->
-			</category>
-		</category>
+		<!--<block type="avancar"></block>-->
+		<block type="hello"></block>
+		<!-- 
+		<block type="move_left"></block>
+		<block type="move_top"></block>
+		<block type="move_bottom"></block>
+		-->
 	</xml>
 	
 	<!-- Botões de ações do jogo
@@ -61,41 +59,23 @@
 	//Load dos commandos do blockly
 	var toolbox = document.getElementById('toolbox');
 	var workspace = Blockly.inject('DivBlockly',{toolbox: toolbox});
+	/*
+	Blockly.Blocks['avancar'] = {
+		init:function(){
+		    this.appendValueInput('VALUE')
+	            .setCheck('String')
+	            .appendField('length of');
+		    this.setOutput(true, 'Number');
+		    this.setColour(160);
+		    this.setTooltip('Returns number of letters in the provided text.');
+    		    this.setHelpUrl('http://www.w3schools.com/jsref/jsref_length_string.asp');
+		}
+	}
+	*/
 	
-
-	Blockly.Blocks['move_right'] = {
-	  init: function() {
-	    this.appendValueInput("PIXELS")
-	        .setCheck("Number")
-	        .appendField("Mover para direita");
-	    this.setInputsInline(true);
-	    this.setPreviousStatement(true, null);
-	    this.setNextStatement(true, null);
-	    this.setColour(290);
-	    this.setTooltip('');
-	    this.setHelpUrl('http://www.google.com/');
-	  }
-	};
-
-	Blockly.JavaScript['move_right'] = function(block) {
-	  var value_pixels = Blockly.JavaScript.valueToCode(block, 'PIXELS', Blockly.JavaScript.ORDER_ATOMIC);
-	  // TODO: Assemble JavaScript into code variable.
-	  var codeMoveRight = "$(\"#moveDiv\").animate({\n " + 
-	                        "left: \"+=" + value_pixels + "px\"\n" +
-	                      "},1000);\n";  
-		// You can show a blockly warning
-	    if( value_pixels >= 300 ) block.setWarningText("You get it!");
-
-	    // Or you can store its value elsewere...
-	    // myExternalVar = value_pixels;
-
-  		return codeMoveRight;
-	};
-
-	var xml = Blockly.Xml.workspaceToDom(workspace);
-	var xml_text = Blockly.Xml.domToText(xml); 
-	console.log(xml_text);
-
+	var hello = new Blockly.FieldDropdown([['world', 'WORLD'], ['computer', 'CPU']]);
+	
+	
 	// Funcoes e scripts inerentes do personagem
 	// e mapas do jogo
     $(document).ready(function(){
