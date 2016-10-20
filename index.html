@@ -28,13 +28,11 @@
 	
 	<div id="DivBlockly"></div>
 	<xml id="toolbox" style="display: none">
-		<!--<block type="avancar"></block>-->
-		<block type="hello"></block>
-		<!-- 
-		<block type="move_left"></block>
-		<block type="move_top"></block>
-		<block type="move_bottom"></block>
-		-->
+		<category name="Comandos">
+			<block type="avancar"></block>			
+			<block type="turn_left"></block>
+			<block type="turn_right"></block>
+		</category>
 	</xml>
 	
 	<!-- Botões de ações do jogo
@@ -52,6 +50,7 @@
 <script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/components/google-blockly/blockly_compressed.js"></script>
 <script src="assets/components/google-blockly/blocks_compressed.js"></script>
+<script src="assets/components/google-blockly/javascript_compressed.js"></script>
 <script src="assets/components/google-blockly/msg/js/pt-br.js"></script>
 <script src="assets/js/script.js"></script>
 <script type="text/javascript">
@@ -59,25 +58,51 @@
 	//Load dos commandos do blockly
 	var toolbox = document.getElementById('toolbox');
 	var workspace = Blockly.inject('DivBlockly',{toolbox: toolbox});
-	/*
+	
+	//@see: https://www.youtube.com/watch?v=s2_xaEvcVI0
+	//https://blockly-demo.appspot.com/static/demos/blockfactory/index.html
 	Blockly.Blocks['avancar'] = {
-		init:function(){
-		    this.appendValueInput('VALUE')
-	            .setCheck('String')
-	            .appendField('length of');
-		    this.setOutput(true, 'Number');
-		    this.setColour(160);
-		    this.setTooltip('Returns number of letters in the provided text.');
-    		    this.setHelpUrl('http://www.w3schools.com/jsref/jsref_length_string.asp');
-		}
+		init: function() {
+			this.appendDummyInput()
+				.appendField("avançar");
+			this.setInputsInline(false);
+			this.setPreviousStatement(true, null);
+			this.setNextStatement(true, null);
+			this.setColour(290);
+			this.setTooltip('');
+			this.setHelpUrl('http://www.google.com.br/');
+	  	}
 	}
-	*/
 	
-	var hello = new Blockly.FieldDropdown([['world', 'WORLD'], ['computer', 'CPU']]);
+	Blockly.Blocks['turn_left'] = {
+	  init: function() {
+		this.appendDummyInput()
+		    .appendField("vire à")
+		    .appendField(new Blockly.FieldDropdown([["esquerda", "Esquerda"], ["direita", "direita"] ]), "Vire à Esquerda");
+		this.setInputsInline(true);
+		this.setPreviousStatement(true, null);
+    	this.setNextStatement(true, null);
+		this.setColour(290);
+		this.setTooltip('');
+		this.setHelpUrl('https://pt.wikipedia.org/wiki/JavaScript');
+	  }
+	};
 	
+	Blockly.Blocks['turn_right'] = {
+	  init: function() {
+		this.appendDummyInput()
+		    .appendField("vire à")
+		    .appendField(new Blockly.FieldDropdown([["esquerda", "Esquerda"], ["direita", "direita"] ]), "Vire à Direita");
+		this.setInputsInline(true);
+		this.setPreviousStatement(true, null);
+    	this.setNextStatement(true, null);
+		this.setColour(290);
+		this.setTooltip('');
+		this.setHelpUrl('https://developers.google.com/blockly/');
+	  }
+	};
 	
-	// Funcoes e scripts inerentes do personagem
-	// e mapas do jogo
+	// Função e scripts do load personagem e mapas do jogo
     $(document).ready(function(){
 		//Carrega estado atual do personagem
 		$('#guildo').addClass('front-stand');
@@ -85,7 +110,7 @@
 		$('#left').html(charX);
     });
 
-    //keyDown Function
+    //keyDown Função
 	$(document).keydown(function(e){
 
 		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
@@ -106,13 +131,13 @@
 
 	});
 
-	//KeyUp Function
+	//KeyUp Função
 	$(document).keyup(function(e) {
 
 		// Não para a caminhada se o jogador está pressionando outros botões
 		// Só param a caminhada se a chave que começou a caminhada é liberado
 		if (e.keyCode == currentKey) {
-			//Define a chave atual como false, isso permite uma nova chave p/ ser informada
+			//Define a chave atual como false, isso permite uma nova chave de ser informada
 			currentKey = false;
 		}
 
