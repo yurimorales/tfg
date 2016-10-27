@@ -56,7 +56,8 @@
 	
 	//Load dos commandos do blockly
 	var workspace = Blockly.inject('DivBlockly',{toolbox: document.getElementById('toolbox')});
-
+	Blockly.JavaScript.addReservedWords('highlightBlock','code','move_forward','turn_left','turn_right');
+	
 	//https://blockly-demo.appspot.com/static/demos/blockfactory/index.html
 	Blockly.Blocks['move_forward'] = {
 		init: function() {
@@ -122,10 +123,11 @@
 	var myInterpreter = null;
     function interpret(){
 		var code = Blockly.JavaScript.workspaceToCode(workspace);
-		myInterpreter = new Interpreter(code, initApi);
-		Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
-		Blockly.JavaScript.addReservedWords('highlightBlock');
-		console.log( 'OPA: ' + myInterpreter);
+		
+		myInterpreter = new Interpreter(code,initApi);
+		Blockly.JavaScript.STATEMENT_PREFIX = 'moveForward(%1);\n';
+		
+		console.log(myInterpreter);
 		myInterpreter.run();
     }
 
@@ -153,21 +155,39 @@
 		
 		var wrapper = function(id) {
 			id = id ? id.toString() : '';
-			return interpreter.createPrimitive(highlightBlock(id));
+			return interpreter.createPrimitive(moveForward(id));
 		};
-		interpreter.setProperty(scope, 'highlightBlock',
+		interpreter.setProperty(scope, 'moveForward',
 		interpreter.createNativeFunction(wrapper));
 		
     }
 	
 	var highlightPause = false;
-	function highlightBlock(id) {
-		workspace.highlightBlock(id);
+	function moveForward(id) {
 		highlightPause = true;
+		//workspace.moveForward(id);
+		//coordenadas
+		var x = charX;
+		var y = charY;
+		var aux = 0;
+		//Move personagem 3 passos p/ baixo
+		console.log("Posição inicial: " + id + " => pos["+x+","+y+"]");
+		while(aux <= 3){
+		    aux++;
+			console.log("pos["+x+","+aux+"]");
+			moveChar('down');
+			if(aux === 3){
+				highlightPause = false;
+				break;	
+			}
+		}
+		
 	}
 	
 	//http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
 	//http://stackoverflow.com/questions/20129236/creating-functions-dynamically-in-js
+	//https://developers.google.com/blockly/guides/app-integration/running-javascript
+	//https://developers.google.com/blockly/guides/configure/android/custom-generators
 	function showCode(){
 		// Generate JavaScript code and display it.
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
@@ -176,15 +196,15 @@
 	}
 
 	function runCode(){
-		// Generate JavaScript code and run it.
-		//window.LoopTrap = 1000;
-		//Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-		//var code = Blockly.JavaScript.workspaceToCode(workspace);
-		//Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+		//Generate JavaScript code and run it.
+		window.LoopTrap = 1000;
+		Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+		var code = Blockly.JavaScript.workspaceToCode(workspace);
+		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 		try {
 			
-			//eval(code);
-			interpret();
+			eval(code);
+			//highlightBlock();
 			
 		} catch (e) {
 			alert('Erro: ' + e);
