@@ -57,7 +57,7 @@
 	//Load dos commandos do blockly
 	var workspace = Blockly.inject('DivBlockly',{toolbox: document.getElementById('toolbox')});
 
-	//@see: https://blockly-demo.appspot.com/static/demos/blockfactory/index.html
+	//https://blockly-demo.appspot.com/static/demos/blockfactory/index.html
 	Blockly.Blocks['move_forward'] = {
 		init: function() {
 			this.appendDummyInput()
@@ -118,75 +118,94 @@
 	  // var code = 'turnRight();\n';
 	  return 'turnRight(\'block_id_' + block.id + '\');\n';
 	};
-
+	
 	var myInterpreter = null;
-	function interpret(){
+    function interpret(){
 		var code = Blockly.JavaScript.workspaceToCode(workspace);
 		myInterpreter = new Interpreter(code, initApi);
 		Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
 		Blockly.JavaScript.addReservedWords('highlightBlock');
-
-		console.log(myInterpreter);
-
+		console.log( 'OPA: ' + myInterpreter);
 		myInterpreter.run();
     }
 
 	function initApi(interpreter, scope){
-	    /*
+		/*
+		var wrapper;
+		wrapper = function(id) {
+			moveForward(0);
+		};
+		interpreter.setProperty(scope, 'moveForward',
+		interpreter.createNativeFunction(wrapper));
+		
+		wrapper = function(id) {
+			turnLeft(1);
+		};
+		interpreter.setProperty(scope, 'turnLeft',
+		interpreter.createNativeFunction(wrapper));
+		
+		wrapper = function(id) {
+			turnRight(2);
+		};
+		interpreter.setProperty(scope, 'turnRight',
+		interpreter.createNativeFunction(wrapper));
+		*/
+		
 		var wrapper = function(id) {
-		id = id ? id.toString() : '';
+			id = id ? id.toString() : '';
 			return interpreter.createPrimitive(highlightBlock(id));
 		};
 		interpreter.setProperty(scope, 'highlightBlock',
 		interpreter.createNativeFunction(wrapper));
-		*/
-	    
-	    var wrapper;
-	    wrapper = function(id) {
-	    	moveForward(0);
-	    };
-
-	    interpreter.setProperty(scope, 'moveForward',
-	    interpreter.createNativeFunction(wrapper));
-	    wrapper = function(id) {
-	    	turnLeft(1);
-	    };
-
-	    interpreter.setProperty(scope, 'turnLeft',
-	    interpreter.createNativeFunction(wrapper));
-	    wrapper = function(id) {
-	    	turnRight(2);
-	    };
-
-	    interpreter.setProperty(scope, 'turnRight',
-	    interpreter.createNativeFunction(wrapper));
-	    
+		
     }
-
-    var highlightPause = false;
+	
+	var highlightPause = false;
 	function highlightBlock(id) {
 		workspace.highlightBlock(id);
 		highlightPause = true;
 	}
+	
+	//http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
+	//http://stackoverflow.com/questions/20129236/creating-functions-dynamically-in-js
+	function showCode(){
+		// Generate JavaScript code and display it.
+		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+		var code = Blockly.JavaScript.workspaceToCode(workspace);
+		alert(code);
+	}
 
+	function runCode(){
+		// Generate JavaScript code and run it.
+		//window.LoopTrap = 1000;
+		//Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+		//var code = Blockly.JavaScript.workspaceToCode(workspace);
+		//Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+		try {
+			
+			//eval(code);
+			interpret();
+			
+		} catch (e) {
+			alert('Erro: ' + e);
+		}
+	}
+	
 	//Scripts do load do personagem e mapa do jogo
     $(document).ready(function(){
-		//Carrega estado atual do personagem
-		$('#guildo').addClass('front-stand');
-		
-
-		$('#top').html(charY);
-		$('#left').html(charX);
-
-		//Teste de assemble de codigo
+    	
+    	//Teste de assemble de codigo
 		$("#iniciar").on('click',function(){
 			runCode();
 		});
-
 		$("#parar").on('click',function(){
 			showCode();
 		});
-
+    	
+		//Carrega estado atual do personagem
+		$('#guildo').addClass('front-stand');
+		$('#top').html(charY);
+		$('#left').html(charX);
     });
 
     //keyDown Função
@@ -228,26 +247,6 @@
 		}
 
 	});
-
-	function showCode(){
-		// Generate JavaScript code and display it.
-		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-		var code = Blockly.JavaScript.workspaceToCode(workspace);
-		alert(code);
-	}
-
-	function runCode(){
-		// Generate JavaScript code and run it.
-		window.LoopTrap = 1000;
-		Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-		var code = Blockly.JavaScript.workspaceToCode(workspace);
-		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-		try {
-			eval(code);
-		} catch (e) {
-			alert(e);
-		}
-	}
 
 </script>
 </body>
