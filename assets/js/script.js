@@ -102,11 +102,17 @@ function moveChar(dir) {
 				}, ((charSpeed/3)*2));
 			break;
 	}
- 
+
+	console.log(currentKey);
+	currentKey = currentKey+1;
 	//move personagem conforme direcao setada
 	switch(dir) {
 
-		case 'front':
+	    case 'front':
+	        console.log('oi');
+	        console.log(currentKey);
+	        console.log(currentKeyCheck);
+
 		    if (chkMove(dir) == 'mapa') {
 		  		$('#mapa').animate({top: '-=32'}, charSpeed, "linear", function() {
 					charY++;
@@ -189,7 +195,7 @@ function chkMove(dir) {
 
     switch(dir) {
 
-	  case'front':
+	  case 'front':
 		//Se o personagem é maior do que ou igual a 64px a partir do fundo do mapa
 		//E o personagem não é menos do que ou igual a 64px a partir do topo da fase
 		//E o "mapa" gráfico não é na parte inferior
@@ -204,7 +210,7 @@ function chkMove(dir) {
 		}
 	    break;
 
-	  case'back':
+	  case 'back':
 		//Se o personagem é maior do que ou igual a 64px a partir do fundo do mapa
 		//E o personagem não é menos do que ou igual a 64px a partir do topo da fase
 		//E o "mapa" gráfico não é na parte superior
@@ -219,7 +225,7 @@ function chkMove(dir) {
 		}
 	    break;
 
-	  case'left':
+	  case 'left':
 	    //Se o personagem é maior do que ou igual a 64px a partir da esquerda da fase
 		//E o personagem não é menos do que ou igual a 64px da direita da fase
 		//E o "mapa" gráfico não é à direita
@@ -234,7 +240,7 @@ function chkMove(dir) {
 		}
 	    break;
 
-	  case'right':
+	  case 'right':
 	    //Se o carácter é maior do que ou igual a 64px a partir da esquerda da fase
 		//E o carácter não é menos do que ou igual a 64px da direita da fase
 		//E o "mapa" gráfico não está à esquerda
