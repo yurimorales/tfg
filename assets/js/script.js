@@ -108,11 +108,11 @@ function moveChar(dir) {
 	//move personagem conforme direcao setada
 	switch(dir) {
 
-	    case 'front':
-	        console.log('oi');
-	        console.log(currentKey);
-	        console.log(currentKeyCheck);
+        console.log('oi');
+        console.log("currentKey "+currentKey);
+        console.log("currentKeyCheck "+currentKeyCheck);
 
+	    case 'front':
 		    if (chkMove(dir) == 'mapa') {
 		  		$('#mapa').animate({top: '-=32'}, charSpeed, "linear", function() {
 					charY++;
@@ -120,8 +120,7 @@ function moveChar(dir) {
 					$('#left').html(charX);
 		    		if (currentKey == currentKeyCheck) moveChar(dir);
 			  	});
-			}
-			else if (chkMove(dir) == 'guildo') {
+			} else if (chkMove(dir) == 'guildo') {
 		  		$('#guildo').animate({top: '+=32'}, charSpeed, "linear", function() {
 		  			charY++;
 					$('#top').html(charY);
