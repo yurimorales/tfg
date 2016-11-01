@@ -101,24 +101,25 @@
 	};
 	
 	Blockly.JavaScript['move_forward'] = function(block) {
-	  // TODO: Assemble JavaScript into code variable.
-	  // var code = 'moveForward(); \n';
-	  return 'moveForward(\'block_id_' + block.id + '\');\n';
+	    //TODO: Assemble JavaScript into code variable.
+		//var code = 'moveForward(); \n';
+		return 'moveForward(\'block_id_' + block.id + '\');\n';
 	};
 
 	Blockly.JavaScript['turn_left'] = function(block) {
-	  var dropdown_name = block.getFieldValue('NAME');
-	  // TODO: Assemble JavaScript into code variable.
-	  // var code = 'turnLeft();\n';
-	  return 'turnLeft(\'block_id_' + block.id + '\');\n';
+	    var dropdown_name = block.getFieldValue('NAME');
+	    //TODO: Assemble JavaScript into code variable.
+	    //var code = 'turnLeft();\n';
+	    return 'turnLeft(\'block_id_' + block.id + '\');\n';
 	};
 
 	Blockly.JavaScript['turn_right'] = function(block) {
-	  var dropdown_name = block.getFieldValue('NAME');
-	  // TODO: Assemble JavaScript into code variable.
-	  // var code = 'turnRight();\n';
-	  return 'turnRight(\'block_id_' + block.id + '\');\n';
+	    var dropdown_name = block.getFieldValue('NAME');
+	    //TODO: Assemble JavaScript into code variable.
+	    //var code = 'turnRight();\n';
+	    return 'turnRight(\'block_id_' + block.id + '\');\n';
 	};
+
 	
 	var myInterpreter = null;
     function interpret(){
@@ -128,30 +129,12 @@
 		Blockly.JavaScript.STATEMENT_PREFIX = 'moveForward(%1);\n';
 		
 		console.log(myInterpreter);
+
 		myInterpreter.run();
     }
-
+    
+	
 	function initApi(interpreter, scope){
-		/*
-		var wrapper;
-		wrapper = function(id) {
-			moveForward(0);
-		};
-		interpreter.setProperty(scope, 'moveForward',
-		interpreter.createNativeFunction(wrapper));
-		
-		wrapper = function(id) {
-			turnLeft(1);
-		};
-		interpreter.setProperty(scope, 'turnLeft',
-		interpreter.createNativeFunction(wrapper));
-		
-		wrapper = function(id) {
-			turnRight(2);
-		};
-		interpreter.setProperty(scope, 'turnRight',
-		interpreter.createNativeFunction(wrapper));
-		*/
 		
 		var wrapper = function(id) {
 			id = id ? id.toString() : '';
@@ -161,6 +144,7 @@
 		interpreter.createNativeFunction(wrapper));
 		
     }
+	
 	
 	var highlightPause = false;
 	function moveForward(id) {
@@ -172,6 +156,7 @@
 		console.log("Posição inicial: " + id + " => pos[" + eixoX + "," + eixoY + "]");
 		moveChar('down');
 	}
+	
 	
 	//http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
 	//http://stackoverflow.com/questions/36499757/how-can-i-make-an-instance-of-a-block-of-blockly-with-javascript

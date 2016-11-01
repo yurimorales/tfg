@@ -103,14 +103,14 @@ function moveChar(dir) {
 			break;
 	}
 
-	console.log(currentKey);
-	currentKey = currentKey+1;
+	console.log('oi: ' + dir);
+	//currentKey = currentKey+1;
+
+    console.log("currentKey "+currentKey);
+    console.log("currentKeyCheck "+currentKeyCheck);
+
 	//move personagem conforme direcao setada
 	switch(dir) {
-
-        console.log('oi');
-        console.log("currentKey "+currentKey);
-        console.log("currentKeyCheck "+currentKeyCheck);
 
 	    case 'front':
 		    if (chkMove(dir) == 'mapa') {
