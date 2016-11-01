@@ -5,6 +5,7 @@ var charSpeed = 400; // Velocidade de caminhada do personage,
 
 var charX = 4; //1 unit = 32px
 var charY = 6; //1 unit = 32px
+var passosPixel = 0;
 
 var stageWidth = 640;
 var stageHeight = 480;
@@ -17,7 +18,7 @@ function moveChar(dir) {
 	//Armazena key inicial de animacao
 	var currentKeyCheck = currentKey;
 
-	//ajuste por parte da longitude, via codifo
+	//ajuste por parte da longitude, via codigo
 	if (dir == 'up') dir = 'back';
 	if (dir == 'down') dir = 'front';
 
@@ -108,10 +109,10 @@ function moveChar(dir) {
 
     console.log("currentKey "+currentKey);
     console.log("currentKeyCheck "+currentKeyCheck);
-
-	//move personagem conforme direcao setada
+	
+	//Move personagem conforme direcao informada pela variavel dir
 	switch(dir) {
-
+		
 	    case 'front':
 		    if (chkMove(dir) == 'mapa') {
 		  		$('#mapa').animate({top: '-=32'}, charSpeed, "linear", function() {
@@ -119,6 +120,13 @@ function moveChar(dir) {
 					$('#top').html(charY);
 					$('#left').html(charX);
 		    		if (currentKey == currentKeyCheck) moveChar(dir);
+					passosPixel++;
+		    		console.log('Andou '+passosPixel+' passos...');
+		    		//Se andar mais de 2 passos, termina a execução
+		    		if(passosPixel > 1){ 
+		    			currentKey = false;
+		    			console.log("Posição final: pos[" + charX + "," + charY + "]");
+		    		}
 			  	});
 			} else if (chkMove(dir) == 'guildo') {
 		  		$('#guildo').animate({top: '+=32'}, charSpeed, "linear", function() {
@@ -126,10 +134,17 @@ function moveChar(dir) {
 					$('#top').html(charY);
 					$('#left').html(charX);
 			    	if (currentKey == currentKeyCheck) moveChar(dir);
+					passosPixel++;
+		    		console.log('Andou '+passosPixel+' passos...');
+					//Se andar mais de 2 passos, termina a execução
+					if(passosPixel > 1){ 
+						currentKey = false;
+						console.log("Posição final: pos[" + charX + "," + charY + "]");
+					}
 			  	});
 			}
 			break;
-
+			
 		case 'back':
 			if (chkMove(dir) == 'mapa') {
 				$('#mapa').animate({top: '+=32'}, charSpeed, "linear", function() {

@@ -128,38 +128,67 @@
 		myInterpreter = new Interpreter(code,initApi);
 		Blockly.JavaScript.STATEMENT_PREFIX = 'moveForward(%1);\n';
 		
-		console.log(myInterpreter);
-
+		Blockly.JavaScript.STATEMENT_PREFIX = 'turnLeft(%1);\n';
+		Blockly.JavaScript.STATEMENT_PREFIX = 'turnRight(%1);\n';
+		
 		myInterpreter.run();
     }
     
-	
+	//@see: http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
+	//@see: http://stackoverflow.com/questions/36499757/how-can-i-make-an-instance-of-a-block-of-blockly-with-javascript
 	function initApi(interpreter, scope){
 		
 		var wrapper = function(id) {
 			id = id ? id.toString() : '';
 			return interpreter.createPrimitive(moveForward(id));
 		};
+		
+		var wrapper2 = function(id) {
+			id = id ? id.toString() : '';
+			return interpreter.createPrimitive(turnLeft(id));
+		};
+		
+		var wrapper3 = function(id) {
+			id = id ? id.toString() : '';
+			return interpreter.createPrimitive(turnRight(id));
+		};
+		
 		interpreter.setProperty(scope, 'moveForward',
 		interpreter.createNativeFunction(wrapper));
 		
+		interpreter.setProperty(scope, 'turnLeft',
+        interpreter.createNativeFunction(wrapper2));
+      
+        interpreter.setProperty(scope, 'turnRight',
+        interpreter.createNativeFunction(wrapper3));	
+		
     }
 	
-	
-	var highlightPause = false;
+	//var highlightPause = false;
 	function moveForward(id) {
-		highlightPause = true;
+		//highlightPause = true;
+		
 		//coordenadas
-		var eixoX = charX;
-		var eixoY = charY;
-
-		console.log("Posição inicial: " + id + " => pos[" + eixoX + "," + eixoY + "]");
-		moveChar('down');
+		console.log("Posição inicial: " + id + " => pos[" + charX + "," + charY + "]");
+		
+		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
+			
+			//Define a key atual, mover p/ baixo
+			currentKey = 40;//e.keyCode;
+			moveChar('down');
+			
+		}
+		
 	}
 	
+	function moveRight(id){
+		alert('Mover p/ direita: ' + id);
+	}
 	
-	//http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
-	//http://stackoverflow.com/questions/36499757/how-can-i-make-an-instance-of-a-block-of-blockly-with-javascript
+	function moveLeft(id){
+		alert('Mover p/ esquerda: ' + id);
+	}
+	
 	//http://stackoverflow.com/questions/20129236/creating-functions-dynamically-in-js
 	//https://developers.google.com/blockly/guides/app-integration/running-javascript
 	//https://developers.google.com/blockly/guides/configure/android/custom-generators
@@ -233,13 +262,13 @@
 	//KeyUp Função
 	$(document).keyup(function(e) {
 
-		// Não para a caminhada se o jogador está pressionando outros botões
-		// Só param a caminhada se a chave que começou a caminhada é liberado
+		//Não para a caminhada se o jogador está pressionando outros botões
+		//Só para a caminhada se a chave que começou a caminhada é liberado
 		if (e.keyCode == currentKey) {
 			//Define a chave atual como false, isso permite uma nova chave de ser informada
 			currentKey = false;
 		}
-
+		
 	});
 
 </script>
