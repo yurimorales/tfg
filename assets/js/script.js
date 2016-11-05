@@ -3,6 +3,7 @@ var currentKey; // Armazena opção atual de comando informado(via teclado "tecl
 var charStep = 2; //1=1st foot, 2=stand, 3=2nd foot, 4=stand
 var charSpeed = 400; //Velocidade de caminhada do personage,
 
+
 var charX = 4; //1 unit=32px
 var charY = 6; //1 unit=32px
 
@@ -11,7 +12,7 @@ var stageHeight = 480;
 var mapWidth = 800;//largura mapa
 var mapHeight = 800;//altura do mapa
 
-//Funçao movimenta personagem
+//Funçao movimenta o personagem
 function moveChar(dir) {
 
 	//Armazena key inicial de animacao
@@ -109,9 +110,9 @@ function moveChar(dir) {
     console.log("currentKey: "+currentKey);
     console.log("currentKeyCheck: "+currentKeyCheck);
 
-	//move personagem conforme direcao setada
+	//Move personagem conforme direcao informada pela variavel dir
 	switch(dir) {
-
+		
 	    case 'front':
 		    if (chkMove(dir) == 'mapa') {
 		  		$('#mapa').animate({top: '-=32'}, charSpeed, "linear", function() {
@@ -129,7 +130,7 @@ function moveChar(dir) {
 			  	});
 			}
 			break;
-
+			
 		case 'back':
 			if (chkMove(dir) == 'mapa') {
 				$('#mapa').animate({top: '+=32'}, charSpeed, "linear", function() {
@@ -196,8 +197,8 @@ function chkMove(dir) {
 
 	  case 'front':
 		//Se o personagem é maior do que ou igual a 64px a partir do fundo do mapa
-		//E o personagem não é menos do que ou igual a 64px a partir do topo da fase
-		//E o "mapa" gráfico não é na parte inferior
+		//e o personagem não é menos do que ou igual a 64px a partir do topo da fase
+		//e o "mapa" gráfico não é na parte inferior
 		if ($('#guildo').position().top <= (stageHeight - 64) 
 		    && $('#guildo').position().top >= 64
 		    && (Math.abs($('#mapa').position().top) + stageHeight) < mapHeight) {
@@ -211,8 +212,8 @@ function chkMove(dir) {
 
 	  case 'back':
 		//Se o personagem é maior do que ou igual a 64px a partir do fundo do mapa
-		//E o personagem não é menos do que ou igual a 64px a partir do topo da fase
-		//E o "mapa" gráfico não é na parte superior
+		//e o personagem não é menos do que ou igual a 64px a partir do topo da fase
+		//e o "mapa" gráfico não é na parte superior
 		if ($('#guildo').position().top >= 64 
 	      && $('#guildo').position().top < (stageHeight - 64)
 		  && $('#mapa').position().top < 0) {
@@ -226,8 +227,8 @@ function chkMove(dir) {
 
 	  case 'left':
 	    //Se o personagem é maior do que ou igual a 64px a partir da esquerda da fase
-		//E o personagem não é menos do que ou igual a 64px da direita da fase
-		//E o "mapa" gráfico não é à direita
+		//e o personagem não é menos do que ou igual a 64px da direita da fase
+		//e o "mapa" gráfico não é à direita
 		if ($('#guildo').position().left < (stageWidth - 64) 
 		    && $('#guildo').position().left >= 64
 		    && $('#mapa').position().left < 0) {
@@ -241,8 +242,8 @@ function chkMove(dir) {
 
 	  case 'right':
 	    //Se o carácter é maior do que ou igual a 64px a partir da esquerda da fase
-		//E o carácter não é menos do que ou igual a 64px da direita da fase
-		//E o "mapa" gráfico não está à esquerda
+		//e o carácter não é menos do que ou igual a 64px da direita da fase
+		//e o "mapa" gráfico não está à esquerda
 		if ($('#guildo').position().left <= (stageWidth - 64) 
 		    && $('#guildo').position().left >= 64
 		    && (Math.abs($('#mapa').position().left) + stageWidth) < mapWidth) {

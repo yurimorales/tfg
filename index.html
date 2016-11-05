@@ -57,7 +57,7 @@
 	
 	//Load dos commandos do blockly
 	var workspace = Blockly.inject('DivBlockly',{ toolbox: document.getElementById('toolbox') });
-	Blockly.JavaScript.addReservedWords('highlightBlock','code','move_up','move_down','turn_left','turn_right');
+	Blockly.JavaScript.addReservedWords('highlightBlock','code');
 	
 	//https://blockly-demo.appspot.com/static/demos/blockfactory/index.html
 	Blockly.Blocks['move_down'] = {
@@ -168,10 +168,24 @@
 		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0){
 			console.log("Caminhe para baixo, pos[" + charX + "," + charY + "]");
 			//Define a key atual
-			currentKey = 40;
-			moveChar('down');
-			//Para a execuçao
-			currentKey = false;
+			// currentKey = 40;
+			// moveChar('down');
+			var cont = 0
+			while(cont < 5){
+				console.log("contador "+cont);
+				cont++;
+				
+				currentKey = 40;
+				moveChar('down');
+
+				if(cont == 4){
+					//Para a execuçao
+					currentKey = false;
+					return;
+				}
+
+			}
+
 		}
 	}
 
@@ -208,9 +222,9 @@
 			currentKey = false;
 		}
 	}
-
-	//http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
-	//http://stackoverflow.com/questions/36499757/how-can-i-make-an-instance-of-a-block-of-blockly-with-javascript
+    
+	//@see: http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
+	//@see: http://stackoverflow.com/questions/36499757/how-can-i-make-an-instance-of-a-block-of-blockly-with-javascript
 	//http://stackoverflow.com/questions/20129236/creating-functions-dynamically-in-js
 	//https://developers.google.com/blockly/guides/app-integration/running-javascript
 	function showCode(){
@@ -290,7 +304,7 @@
 			//Define a chave atual como false, isso permite uma nova chave de ser informada
 			currentKey = false;
 		}
-
+		
 	});
 
 </script>
