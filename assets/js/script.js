@@ -1,15 +1,15 @@
 //Variáveis globais
 var currentKey; // Armazena opção atual de comando informado(via teclado "teclas direcionais")
-var charStep = 2; // 1=1st foot, 2=stand, 3=2nd foot, 4=stand
-var charSpeed = 400; // Velocidade de caminhada do personage,
+var charStep = 2; //1=1st foot, 2=stand, 3=2nd foot, 4=stand
+var charSpeed = 400; //Velocidade de caminhada do personage,
 
-var charX = 4; //1 unit = 32px
-var charY = 6; //1 unit = 32px
+var charX = 4; //1 unit=32px
+var charY = 6; //1 unit=32px
 
 var stageWidth = 640;
 var stageHeight = 480;
-var mapWidth = 800;
-var mapHeight = 800;
+var mapWidth = 800;//largura mapa
+var mapHeight = 800;//altura do mapa
 
 //Funçao movimenta personagem
 function moveChar(dir) {
@@ -17,7 +17,7 @@ function moveChar(dir) {
 	//Armazena key inicial de animacao
 	var currentKeyCheck = currentKey;
 
-	//ajuste por parte da longitude, via codifo
+	//ajuste por parte da longitude, via codigo
 	if (dir == 'up') dir = 'back';
 	if (dir == 'down') dir = 'front';
 
@@ -103,11 +103,11 @@ function moveChar(dir) {
 			break;
 	}
 
-	console.log('oi: ' + dir);
+	console.log('direcao tomada: ' + dir);
 	//currentKey = currentKey+1;
 
-    console.log("currentKey "+currentKey);
-    console.log("currentKeyCheck "+currentKeyCheck);
+    console.log("currentKey: "+currentKey);
+    console.log("currentKeyCheck: "+currentKeyCheck);
 
 	//move personagem conforme direcao setada
 	switch(dir) {
