@@ -8,44 +8,61 @@
 	<title>Guildo Game</title>
 	<link rel="stylesheet" href="assets/components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/css/init.css">
-	<link rel="stylesheet" href="assets/css/personagens.css">
+	<link rel="stylesheet" href="assets/css/personagem.css">
 </head>
 <body>
 <div class="container">
-	
-	<div id="fase">
-		<div id="guildo"></div>
-		<div id="mapa"></div>
+	<div class="row">
+		<div class="col-xs-12 col-md-4">
+			<h4>Pontuação:<div style="display:inline-block;" id="pontuacao-atual">0</div></h4>
+		</div>
 	</div>
 
-	<div class="showPosition">
+	<div class="row">
+		<div class="col-md-7">
+			<div id="fase">
+				<div id="guildo"></div>
+				<div id="mapa"></div>
+			</div>
+		</div>
+		<br/>
+		<div class="col-md-5">
+			<div id="DivBlockly"></div>
+			<xml id="toolbox" style="display:none">
+				<category name="Comandos" colour="330">
+					<block type="move"></block>
+					<block type="turn_left"></block>
+					<block type="turn_right"></block>
+				</category>
+			</xml>
+		</div>
+	</div>
+
+	<div class="row">
+		<br/>
+		<div class="col-xs-12 col-md-8">
+			<div class="col-sm-10">
+				<img style="display:inline;margin-top:-40px;" src="images/heart.png" width="50" height="50"/>
+				<div id="div-barra-vida">
+					<div id="barra-vida" style="width:90%;"></div>
+				</div>
+			</div>
+			<div style="margin-top:30px;" class="col-sm-10">
+				<button type="button" id="iniciar" class="btn btn-success btn-xlarge"><i class="glyphicon glyphicon-play"></i> Iniciar</button>
+				<button type="button" id="reiniciar" class="btn btn-danger btn-xlarge"><i class="glyphicon glyphicon-refresh"></i> Reiniciar</button>
+				<button type="button" id="configs" class="btn btn-default btn-xlarge"><i class="glyphicon glyphicon-cog"></i> Configurações</button>
+			</div>
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	<!-- <div class="showPosition">
 		<div>Pos:</div>
 		<div id="left"></div>
 		<div>:</div>
 		<div id="top"></div>
-	</div>
-	
-	
-	<div id="DivBlockly"></div>
-	<xml id="toolbox" style="display: none">
-		<category name="Comandos" colour="330">
-			<block type="move_down"></block>
-			<block type="move_up"></block>
-			<block type="turn_left"></block>
-			<block type="turn_right"></block>
-		</category>
-	</xml>
-
-	<!-- Botões de ações do jogo -->
-	<div class="row">
-		<div class="col-sm-6 botoes-acoes">
-			<button type="button" id="iniciar" class="btn btn-success"><i class="glyphicon glyphicon-play"></i> Iniciar</button>
-			<button type="button" id="parar" class="btn btn-danger"><i class="glyphicon glyphicon-stop"></i> Parar</button>
-			<button type="button" id="configuracoes" class="btn btn-default"><i class="glyphicon glyphicon-cog"></i> Configurações</button>
-		</div>
-	</div>
-
-</div>
+	</div>-->
 <script src="assets/components/google-blockly/blockly_compressed.js"></script>
 <script src="assets/components/google-blockly/blocks_compressed.js"></script>
 <script src="assets/components/google-blockly/javascript_compressed.js"></script>
@@ -60,10 +77,10 @@
 	Blockly.JavaScript.addReservedWords('highlightBlock','code');
 	
 	//https://blockly-demo.appspot.com/static/demos/blockfactory/index.html
-	Blockly.Blocks['move_down'] = {
+	Blockly.Blocks['move'] = {
 		init: function() {
 			this.appendDummyInput()
-				.appendField("avançar p/ baixo");
+				.appendField("avançar");
 			this.setInputsInline(false);
 			this.setPreviousStatement(true, null);
 			this.setNextStatement(true, null);
@@ -73,31 +90,18 @@
 	  	}
 	}
 	
-	Blockly.Blocks['move_up'] = {
+	Blockly.Blocks['turn_left'] = {
 		init: function() {
 			this.appendDummyInput()
-				.appendField("avançar p/ cima");
-			this.setInputsInline(false);
+			    .appendField("vire à")
+			    .appendField(new Blockly.FieldDropdown([["esquerda ↺", "Esquerda"], ["direita ↻", "Direita"]]), "NAME");
+			this.setInputsInline(true);
 			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
+	    	this.setNextStatement(true, null);
 			this.setColour(290);
 			this.setTooltip('');
-			this.setHelpUrl('http://www.unifra.br/');
-	  	}
-	}
-
-	Blockly.Blocks['turn_left'] = {
-	  init: function() {
-		this.appendDummyInput()
-		    .appendField("vire à")
-		    .appendField(new Blockly.FieldDropdown([["esquerda ↺", "Esquerda"], ["direita ↻", "Direita"]]), "NAME");
-		this.setInputsInline(true);
-		this.setPreviousStatement(true, null);
-    	this.setNextStatement(true, null);
-		this.setColour(290);
-		this.setTooltip('');
-		this.setHelpUrl('https://pt.wikipedia.org/wiki/JavaScript');
-	  }
+			this.setHelpUrl('https://pt.wikipedia.org/wiki/JavaScript');
+		}
 	};
 	
 	Blockly.Blocks['turn_right'] = {
@@ -114,16 +118,12 @@
 		}
 	};
 		
-	Blockly.JavaScript['move_down'] = function(block) {
-		var nome_bloco = block.getFieldValue('NAME');
-		return 'moveDown();\n';
-		//return 'moveDown(\'block_id_' + block.id + '\');\n';
+	Blockly.JavaScript['move'] = function(block) {
+		// You can show a blockly warning
+		//if( charY >= 7 ) block.setWarningText("You get it!");
+		return 'move();\n';
+		//return 'move(\'block_id_' + block.id + '\');\n';
 	};
-
-	Blockly.JavaScript['move_up'] = function(block) {
-		return 'moveUp();\n';
-		//return 'moveUp(\'block_id_' + block.id + '\');\n';
-	};	
 
 	Blockly.JavaScript['turn_left'] = function(block) {
 	    var dropdown_name = block.getFieldValue('NAME');
@@ -161,48 +161,31 @@
 	// 	interpreter.createNativeFunction(wrapper));
 		
  //    }
-		
+
+ 	//http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
+	//http://stackoverflow.com/questions/36499757/how-can-i-make-an-instance-of-a-block-of-blockly-with-javascript
+	//http://stackoverflow.com/questions/20129236/creating-functions-dynamically-in-js
+	//https://developers.google.com/blockly/guides/app-integration/running-javascript
+	
 	// var highlightPause = false;
-	function moveDown() {
+	function move() {
 		// highlightPause = true;
 		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0){
-			console.log("Caminhe para baixo, pos[" + charX + "," + charY + "]");
-			//Define a key atual
-			// currentKey = 40;
-			// moveChar('down');
-			var cont = 0
-			while(cont < 5){
-				console.log("contador "+cont);
-				cont++;
-				
-				currentKey = 40;
-				moveChar('down');
-
-				if(cont == 4){
-					//Para a execuçao
-					currentKey = false;
-					return;
-				}
-
-			}
-
-		}
-	}
-
-	function moveUp(){
-		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
-			console.log("Caminhe para cima, pos[" + charX + "," + charY + "]");
-			//Define a key atual
-			currentKey = 38;
-			moveChar('up');
+			console.log("Ordeno que vc caminhe... pos[" + charX + "," + charY + "]");
+			
+			//currentKey = 40;
+			//moveChar('down');
+			currentKey = 40;
+			moveChar('down');
+			
 			//Para a execuçao
 			currentKey = false;
 		}
 	}
 
-	function turnRight(comando){
+	function turnRight(direcao){
 		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
-			console.log('Vire a '+comando+', estou ordenando!');
+			console.log('Vire a '+direcao+', estou ordenando!');
 			//Define a key atual
 			currentKey = 39;
 			moveChar('right');
@@ -212,9 +195,9 @@
 		}
 	}
 	
-	function turnLeft(comando){
+	function turnLeft(direcao){
 		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
-			console.log('Vire a '+comando+', estou ordenando!');
+			console.log('Vire a '+direcao+', estou ordenando!');
 			//Define a key atual
 			currentKey = 37;
 			moveChar('left');
@@ -223,10 +206,7 @@
 		}
 	}
     
-	//@see: http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
-	//@see: http://stackoverflow.com/questions/36499757/how-can-i-make-an-instance-of-a-block-of-blockly-with-javascript
-	//http://stackoverflow.com/questions/20129236/creating-functions-dynamically-in-js
-	//https://developers.google.com/blockly/guides/app-integration/running-javascript
+	
 	function showCode(){
 		// Generate JavaScript code and display it.
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
@@ -242,7 +222,7 @@
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 		try {
 
-			console.log("Codigo sendo executado: "+code);
+			console.log(code);
 			eval(code);
 			
 		} catch (e) {
@@ -250,17 +230,20 @@
 		}
 	}
 	
-	//Scripts do load do personagem e mapa do jogo
     $(document).ready(function(){
     	
-    	//Teste de assemble de codigo
 		$("#iniciar").on('click',function(){
 			runCode();
 		});
-		$("#parar").on('click',function(){
-			showCode();
+
+		$("#reiniciar").on('click',function(){
+			location.reload(); 
 		});
-    	
+
+    	$("#configs").on("click",function(){
+			showCode();
+    	});
+
 		//Carrega estado atual do personagem
 		$('#guildo').addClass('front-stand');
 		$('#top').html(charY);

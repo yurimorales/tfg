@@ -1,9 +1,8 @@
-//Variáveis globais
 var currentKey; // Armazena opção atual de comando informado(via teclado "teclas direcionais")
 var charStep = 2; //1=1st foot, 2=stand, 3=2nd foot, 4=stand
 var charSpeed = 400; //Velocidade de caminhada do personage,
 
-
+//[x,y], posicao inicial do personagem no cenario
 var charX = 4; //1 unit=32px
 var charY = 6; //1 unit=32px
 
@@ -104,7 +103,7 @@ function moveChar(dir) {
 			break;
 	}
 
-	console.log('direcao tomada: ' + dir);
+	console.log('Indo para a:' + dir);
 	//currentKey = currentKey+1;
 
     console.log("currentKey: "+currentKey);

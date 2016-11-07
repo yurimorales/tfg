@@ -1,45 +1,46 @@
+body{
+	background-color: #f2f2f2;
+}
 #fase{
-	position: relative;
-	float: left;
-	top: 50px;
-	width: 640px;
-	height: 480px;
-	margin: 10px 0 0 0;
+	position:relative;
+	float:left;
+	width:640px;
+	height:480px;
+	margin-top:10px;
 	border: solid 2px #000;
 	overflow: hidden;
 }
-
 #mapa{
-	position: absolute;
-	width: 800px;
-	height: 800px;
+	position:absolute;
+	width:800px;
+	height:800px;
 	background: url('../../images/map.jpg') no-repeat 0px 0px;	
 }
-
-.showPosition{
-	position: fixed;
-	width: 400px;
-	margin: 0 auto;
-	height: 30px;
-	top: 20px;
-}
-
-.showPosition div{
-	float: left;
-}
-
 #DivBlockly{
-	position: absolute;
+	/*position: absolute;
 	top:60px;
 	right:10px;
-
-	margin-right:20px;
+	*/
+	height:485px;
+	width:505px;
+}
+#div-barra-vida{
+	border:1px solid #ccc;
 	width:500px;
-	height:480px;
-}	
-/*
-.botoes-acoes{
-	position:relative;
-	bottom: 0;
-	margin: 10px 0 10px 0;
-}*/
+	height:50px;
+	overflow:auto;
+	background:#eee;
+	display: inline-block;
+}
+#barra-vida{
+	background:#d9534f;
+	height:100%;
+}
+.btn-xlarge {
+    padding: 18px 28px;
+    font-size: 22px; /*change this to your desired size*/
+    line-height: normal;
+    -webkit-border-radius: 8px;
+   -moz-border-radius: 8px;
+    border-radius: 8px;
+}
