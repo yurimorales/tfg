@@ -13,8 +13,8 @@ body{
 #mapa{
 	position:absolute;
 	width:800px;
-	height:800px;
-	background: url('../../images/map.jpg') no-repeat 0px 0px;	
+	height:800px;/*map.jpg*/
+	background: url('../../images/cenario01.jpg') no-repeat 0px 0px;
 }
 #DivBlockly{
 	/*position: absolute;

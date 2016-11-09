@@ -1,11 +1,11 @@
 #guildo{
 	position: absolute;
-  	top: 192px; /*starting pos*/
-  	left: 128px; /*starting pos*/
+  	top: 192px; /*starting posX*/
+  	left: 128px; /*starting posY*/
 	width: 32px;
 	height: 32px;
 	z-index: 1;
-	background: url('../../images/guildo.png') no-repeat;
+	background: url('../../images/01.png') no-repeat;
 }
 
 #guildo.front-right { background-position: 0px 0px; }
