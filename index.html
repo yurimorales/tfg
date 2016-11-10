@@ -16,7 +16,7 @@
 		<div class="col-xs-12 col-md-4">
 			<h4>Pontuação:
 				<div style="display:inline-block;" id="pontuacao-atual">0
-					<!-- <div style="float:left" id="left"></div>:<div style="float:left" id="top"></div></div> -->
+				<!-- <div style="float:left" id="left"></div>:<div style="float:left" id="top"></div></div> -->
 			</h4>
 		</div>
 	</div>
@@ -235,6 +235,8 @@
     	
 		$("#iniciar").on('click',function(){
 			runCode();
+			//Debug, pos x e y atual
+			console.log("Pos:["+charX+","+charY+"]");
 		});
 
 		$("#reiniciar").on('click',function(){
@@ -247,8 +249,8 @@
 
 		//Carrega estado atual do personagem
 		$('#guildo').addClass('front-stand');
-		$('#top').html(charY);
-		$('#left').html(charX);
+		//$('#top').html(charY);
+		//$('#left').html(charX);
     });
 
     //keyDown Função
@@ -278,7 +280,7 @@
 		}
 
 	});
-
+	
 	//KeyUp Função
 	$(document).keyup(function(e) {
 
@@ -290,7 +292,7 @@
 		}
 		
 	});
-
+	
 </script>
 </body>
 </html>
