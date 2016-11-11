@@ -185,7 +185,7 @@
 	}
 
 	function turnRight(direcao){
-		if ($("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length < 2 ) {
+		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
 			console.log('Vire a '+direcao+', estou ordenando!');
 			//Define a key atual
 			currentKey = 39;
@@ -196,13 +196,8 @@
 		}
 	}
 	
-	function turnLeft(direcao) {
-	    console.log("passando");
-
-	    console.log($("#guildo").queue("fx"));
-	    console.log($("#mapa").queue("fx"));
-
-		if ($("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length < 2 ) {
+	function turnLeft(direcao){
+		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
 			console.log('Vire a '+direcao+', estou ordenando!');
 			//Define a key atual
 			currentKey = 37;
