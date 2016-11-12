@@ -15,8 +15,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-md-4">
 			<h4>Pontuação:
-				<div style="display:inline-block;" id="pontuacao-atual">0
-				<!-- <div style="float:left" id="left"></div>:<div style="float:left" id="top"></div></div> -->
+				<div style="display:inline-block;" id="pontuacao-atual">0</div>
 			</h4>
 		</div>
 	</div>
@@ -34,10 +33,8 @@
 				<category name="Comandos" colour="330">
 					<block type="move_right"></block>
 					<block type="move_left"></block>
-					<block type="move_front"></block>
-					<block type="move_back"></block>
-					<block type="turn_left"></block>
-					<block type="turn_right"></block>
+					<block type="move_top"></block>
+					<block type="move_bottom"></block>
 				</category>
 			</xml>
 		</div>
@@ -48,19 +45,44 @@
 			<div class="col-sm-10">
 				<img style="display:inline;margin-top:-40px;" src="images/heart.png" width="50" height="50"/>
 				<div id="div-barra-vida">
-					<div id="barra-vida" style="width:100%;"></div>
+					<div id="barra-vida"></div>
 				</div>
 			</div>
 			<div style="margin-top:30px;" class="col-sm-10">
 				<button type="button" id="iniciar" class="btn btn-success btn-xlarge"><i class="glyphicon glyphicon-play"></i> Iniciar</button>
 				<button type="button" id="reiniciar" class="btn btn-danger btn-xlarge"><i class="glyphicon glyphicon-refresh"></i> Reiniciar</button>
-				<button type="button" id="configs" class="btn btn-default btn-xlarge"><i class="glyphicon glyphicon-cog"></i> Configurações</button>
+
+				<div class="btn-group dropup">
+					<button type="button" class="btn btn-default btn-xlarge dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> Configurações</button>
+					<ul class="dropdown-menu">
+						<li><a href="#" data-toggle="modal" data-target="#objetivos"><i class="glyphicon glyphicon-info-sign"></i> Objetivos</a></li>
+						<li class="divider"></li>
+						<li><a href="#" id="verCodigoFonte" class="dropdown-item"><i class="glyphicon glyphicon-eye-open"></i> Código fonte gerado pelo Blockly</a></li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
-	<br/>
-	<br/>
-	<br/>
+
+	<div id="objetivos" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Objetivos</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p>Encontre a caverna, ao encontrar, entre para ir proseguir para próxima fase.</p>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+<br/>
+<br/>
+<br/>
 <script src="assets/components/google-blockly/blockly_compressed.js"></script>
 <script src="assets/components/google-blockly/blocks_compressed.js"></script>
 <script src="assets/components/google-blockly/javascript_compressed.js"></script>
@@ -69,16 +91,16 @@
 <script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/js/script.js"></script>
 <script type="text/javascript">
-	
+
 	//Load dos commandos do blockly
 	var workspace = Blockly.inject('DivBlockly',{ toolbox: document.getElementById('toolbox') });
-	Blockly.JavaScript.addReservedWords('highlightBlock','code');
+	Blockly.JavaScript.addReservedWords('code','move_top','move_bottom','move_right','move_left');
 	
 	//https://blockly-demo.appspot.com/static/demos/blockfactory/index.html
-	Blockly.Blocks['move_front'] = {
+	Blockly.Blocks['move_top'] = {
 		init: function() {
 			this.appendDummyInput()
-				.appendField("avançar p/ cima");
+				.appendField("avançar para cima");
 			this.setInputsInline(false);
 			this.setPreviousStatement(true, null);
 			this.setNextStatement(true, null);
@@ -87,10 +109,10 @@
 	  	}
 	}
 	
-	Blockly.Blocks['move_back'] = {
+	Blockly.Blocks['move_bottom'] = {
 		init: function() {
 			this.appendDummyInput()
-				.appendField("avançar p/ tras");
+				.appendField("avançar para baixo");
 			this.setInputsInline(false);
 			this.setPreviousStatement(true, null);
 			this.setNextStatement(true, null);
@@ -103,7 +125,7 @@
 	Blockly.Blocks['move_right'] = {
 		init: function() {
 			this.appendDummyInput()
-				.appendField("avançar p/ direita");
+				.appendField("avançar para a direita");
 			this.setInputsInline(false);
 			this.setPreviousStatement(true, null);
 			this.setNextStatement(true, null);
@@ -115,7 +137,7 @@
 	Blockly.Blocks['move_left'] = {
 		init: function() {
 			this.appendDummyInput()
-				.appendField("avançar p/ esquerda");
+				.appendField("avançar para a esquerda");
 			this.setInputsInline(false);
 			this.setPreviousStatement(true, null);
 			this.setNextStatement(true, null);
@@ -124,79 +146,47 @@
 	  	}
 	}
 
-	Blockly.Blocks['turn_left'] = {
-		init: function() {
-			this.appendDummyInput()
-			    .appendField("vire à")
-			    .appendField(new Blockly.FieldDropdown([["esquerda ↺", "Esquerda"]]), "NAME");
-			this.setInputsInline(true);
-			this.setPreviousStatement(true, null);
-	    	this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-			//this.setHelpUrl('https://pt.wikipedia.org/wiki/JavaScript');
-		}
+	Blockly.JavaScript['move_top'] = function(block) {
+		return 'moveTop();\n';
+	};
+
+	Blockly.JavaScript['move_bottom'] = function(block) {
+		return 'moveBottom();\n';
+	};
+
+	Blockly.JavaScript['move_right'] = function(block) {
+		return 'moveRight();\n';
+	};
+
+	Blockly.JavaScript['move_left'] = function(block) {
+		return 'moveLeft();\n';
 	};
 	
-	Blockly.Blocks['turn_right'] = {
-		init: function() {
-			this.appendDummyInput()
-			    .appendField("vire à")
-			    .appendField(new Blockly.FieldDropdown([["direita ↻", "Direita"]]), "NAME");
-			this.setInputsInline(true);
-			this.setPreviousStatement(true, null);
-	    	this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-			//this.setHelpUrl('https://developers.google.com/blockly/');
-		}
-	};
-		
-	Blockly.JavaScript['move'] = function(block) {
-		// You can show a blockly warning
-		//if( charY >= 7 ) block.setWarningText("You get it!");
-		return 'move();\n';
-		//return 'move(\'block_id_' + block.id + '\');\n';
-	};
-
-	Blockly.JavaScript['turn_left'] = function(block) {
-	    var dropdown_name = block.getFieldValue('NAME');
-	    //TODO: Assemble JavaScript into code variable.
-	    //var code = 'turnLeft();\n';
-	    // return 'turnLeft(\'block_id_' + block.id + '\');\n';
-	    return 'turnLeft(\'' + dropdown_name + '\');\n';
-	};
-
-	Blockly.JavaScript['turn_right'] = function(block) {
-	    var dropdown_name = block.getFieldValue('NAME');
-	    //TODO: Assemble JavaScript into code variable.
-	    //var code = 'turnRight();\n';
-	    // return 'turnRight(\'block_id_' + block.id + '\');\n';
-	    return 'turnRight(\'' + dropdown_name + '\');\n';
-	};
-
  	//http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
 	//http://stackoverflow.com/questions/36499757/how-can-i-make-an-instance-of-a-block-of-blockly-with-javascript
 	//http://stackoverflow.com/questions/20129236/creating-functions-dynamically-in-js
 	//https://developers.google.com/blockly/guides/app-integration/running-javascript
-	
-	function move() {
-		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0){
-			console.log("position atual [" + charX + "," + charY + "]");
+	function moveTop() {
+		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) { // < 2
 			
-			//currentKey = 40;
-			//moveChar('down');
-			currentKey = 40;
-			moveChar('down');
+			currentKey = 38;
+			moveChar('up');
 			
 			//Para a execuçao
 			currentKey = false;
 		}
 	}
 
-	function turnRight(direcao){
-		if ($("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length < 2 ) {
-			console.log('Vire a '+direcao+', estou ordenando!');
+	function moveBottom(){
+		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) { // < 2
+			currentKey = 40;
+			moveChar('down');
+			currentKey = false;
+		}
+	}
+
+	function moveRight(){
+		if ($("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) { // < 2
 			//Define a key atual
 			currentKey = 39;
 			moveChar('right');
@@ -206,14 +196,9 @@
 		}
 	}
 	
-	function turnLeft(direcao) {
-	    console.log("passando");
+	function moveLeft(){
 
-	    console.log($("#guildo").queue("fx"));
-	    console.log($("#mapa").queue("fx"));
-
-		if ($("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length < 2 ) {
-			console.log('Vire a '+direcao+', estou ordenando!');
+		if ($("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) { // < 2
 			//Define a key atual
 			currentKey = 37;
 			moveChar('left');
@@ -221,7 +206,6 @@
 			currentKey = false;
 		}
 	}
-    
 	
 	function showCode(){
 		// Generate JavaScript code and display it.
@@ -237,75 +221,103 @@
 		var code = Blockly.JavaScript.workspaceToCode(workspace);
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 		try {
-
-			console.log(code);
+			
 			eval(code);
+			console.log(code);
 			
 		} catch (e) {
 			alert('Erro:'+e);
 		}
 	}
 	
+	function updateAllValues() {
+		//Restaurando valo inicial das variaveis do localStorage
+		if(!localStorage.getItem('pontuacao')){
+			localStorage.setItem('pontuacao', 0);
+		}
+		if(!localStorage.getItem('percentual_vida')){
+			localStorage.setItem('percentual_vida', 100);
+		}
+		if(!localStorage.getItem('charX')){
+			localStorage.setItem('charX', 4);
+		}
+		if(!localStorage.getItem('charY')){
+			localStorage.setItem('charY', 6);
+		}
+
+		$("#pontuacao-atual").html(localStorage.getItem('pontuacao'));
+		$("#barra-vida").css("width",""+localStorage.getItem('percentual_vida')+"%");
+	}
+
     $(document).ready(function(){
     	
+    	setInterval(function() {
+	    	updateAllValues();
+		},3000);
+
 		$("#iniciar").on('click',function(){
 			runCode();
 		});
 
 		$("#reiniciar").on('click',function(){
-			location.reload(); 
+
+			localStorage.setItem('pontuacao', 0);
+			localStorage.setItem('percentual_vida', 100);
+			localStorage.setItem('charX', 4);
+			localStorage.setItem('charY', 6);
+			//localStorage.clear();
+			//location.reload(); 
+			window.location = window.location;
+			
 		});
 
-    	$("#configs").on("click",function(){
+    	$("#verCodigoFonte").on("click",function(){
 			showCode();
     	});
 
 		//Carrega estado atual do personagem
 		$('#guildo').addClass('front-stand');
-		//$('#top').html(charY);
-		//$('#left').html(charX);
     });
 
     //keyDown Função
-	$(document).keydown(function(e){
+	// $(document).keydown(function(e){
 
-		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
+	// 	if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
 
-			//Define a key atual
-			currentKey = e.keyCode;
-			//Executa a função de movimento do personagem moveChar("<direcao a ser tomada>")
-			switch(e.keyCode) {
+	// 		//Define a key atual
+	// 		currentKey = e.keyCode;
+	// 		//Executa a função de movimento do personagem moveChar("<direcao a ser tomada>")
+	// 		switch(e.keyCode) {
 
-				case 38: 
-					moveChar('up');
-					break;
-				case 39:
-					moveChar('right');
-					break;
-				case 40:
-					moveChar('down');
-					break;
-				case 37:
-					moveChar('left');
-					break;
-			}
+	// 			case 38: 
+	// 				moveChar('up');
+	// 				break;
+	// 			case 39:
+	// 				moveChar('right');
+	// 				break;
+	// 			case 40:
+	// 				moveChar('down');
+	// 				break;
+	// 			case 37:
+	// 				moveChar('left');
+	// 				break;
+	// 		}
 
-		}
+	// 	}
 
-	});
+	// });
 	
 	//KeyUp Função
-	$(document).keyup(function(e) {
+	// $(document).keyup(function(e) {
 
-		//Não para a caminhada se o jogador está pressionando outros botões
-		//Só para a caminhada se a chave que começou a caminhada é liberado
-		if (e.keyCode == currentKey) {
-			//Define a chave atual como false, isso permite uma nova chave de ser informada
-			currentKey = false;
-		}
+	// 	//Não para a caminhada se o jogador está pressionando outros botões
+	// 	//Só para a caminhada se a chave que começou a caminhada é liberado
+	// 	if (e.keyCode == currentKey) {
+	// 		//Define a chave atual como false, isso permite uma nova chave de ser informada
+	// 		currentKey = false;
+	// 	}
 		
-	});
-	
+	// });
 </script>
 </body>
 </html>

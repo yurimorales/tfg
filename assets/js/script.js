@@ -3,8 +3,8 @@ var charStep = 2; //1=1st foot, 2=stand, 3=2nd foot, 4=stand
 var charSpeed = 400; //Velocidade de caminhada do personage,
 
 //[x,y], posicao inicial do personagem no cenario
-var charX = 4; //1 unit=32px
-var charY = 6; //1 unit=32px
+var charX = localStorage.getItem('charX'); //1 unit=32px
+var charY = localStorage.getItem('charY'); //1 unit=32px
 
 var stageWidth = 640;
 var stageHeight = 480;
@@ -13,33 +13,33 @@ var mapHeight = 800;//altura do mapa
 
 //Funçao movimenta o personagem
 function moveChar(dir) {
-
+	
 	//Armazena key inicial de animacao
 	var currentKeyCheck = currentKey;
-
-	//ajuste por parte da longitude, via codigo
+	
+	//ajuste por parte da position up/down, via codigo
 	if (dir == 'up') dir = 'back';
 	if (dir == 'down') dir = 'front';
-
+	
 	charStep++;
 	if (charStep == 5) charStep = 1;
-
+	
 	//Remove classe atual do personagem
 	$('#guildo').removeAttr('class');
-
+	
 	//Adiciona nova classe
 	switch(charStep) {
-
+		
 		case 1: 
 			$('#guildo').addClass(dir+'-stand'); 
-
+			
 			setTimeout(function() { 
 				charStep++;
 				if (charStep == 5) charStep = 1;
 				$('#guildo').removeAttr('class');
 				$('#guildo').addClass(dir+'-right'); 
 			}, (charSpeed/3));
-
+			
 			setTimeout(function() { 
 				charStep++;
 				if (charStep == 5) charStep = 1;
@@ -103,7 +103,7 @@ function moveChar(dir) {
 			break;
 	}
 
-	console.log('Indo para a:' + dir);
+	console.log('Indo para:' + dir);
 	//currentKey = currentKey+1;
 
     console.log("currentKey: "+currentKey);
@@ -116,15 +116,13 @@ function moveChar(dir) {
 		    if (chkMove(dir) == 'mapa') {
 		  		$('#mapa').animate({top: '-=32'}, charSpeed, "linear", function() {
 					charY++;
-					$('#top').html(charY);
-					$('#left').html(charX);
+					console.log("front1: "+charX+","+charY);
 		    		if (currentKey == currentKeyCheck) moveChar(dir);
 			  	});
 			} else if (chkMove(dir) == 'guildo') {
 		  		$('#guildo').animate({top: '+=32'}, charSpeed, "linear", function() {
 		  			charY++;
-					$('#top').html(charY);
-					$('#left').html(charX);
+					console.log("front2: "+charX+","+charY);
 			    	if (currentKey == currentKeyCheck) moveChar(dir);
 			  	});
 			}
@@ -134,15 +132,13 @@ function moveChar(dir) {
 			if (chkMove(dir) == 'mapa') {
 				$('#mapa').animate({top: '+=32'}, charSpeed, "linear", function() {
 					charY--;
-					$('#top').html(charY);
-					$('#left').html(charX);
+					console.log("back1: "+charX+","+charY);
 					if (currentKey == currentKeyCheck) moveChar(dir);
 				});
 			}else if (chkMove(dir) == 'guildo') {
 				$('#guildo').animate({top: '-=32'}, charSpeed, "linear", function() {
 					charY--;
-					$('#top').html(charY);
-					$('#left').html(charX);
+					console.log("back2: "+charX+","+charY);
 					if (currentKey == currentKeyCheck) moveChar(dir);
 				});
 			}
@@ -152,16 +148,14 @@ function moveChar(dir) {
 			if (chkMove(dir) == 'mapa') {
 				$('#mapa').animate({left: '+=32'}, charSpeed, "linear", function() {
 					charX--;
-					$('#top').html(charY);
-					$('#left').html(charX);
+					console.log("left1: "+charX+","+charY);
 					if (currentKey == currentKeyCheck) moveChar(dir);
 				});
 			}
 			else if (chkMove(dir) == 'guildo') {
 				$('#guildo').animate({left: '-=32'}, charSpeed, "linear", function() {
 					charX--;
-					$('#top').html(charY);
-					$('#left').html(charX);
+					console.log("left2: "+charX+","+charY);
 					if (currentKey == currentKeyCheck) moveChar(dir);
 				});
 			}
@@ -171,16 +165,14 @@ function moveChar(dir) {
 			if (chkMove(dir) == 'mapa') {
 				$('#mapa').animate({left: '-=32'}, charSpeed, "linear", function() {
 					charX++;
-					$('#top').html(charY);
-					$('#left').html(charX);
+					console.log("right1: "+charX+","+charY);
 					if (currentKey == currentKeyCheck) moveChar(dir);
 				});
 			}
 			else if (chkMove(dir) == 'guildo') {
 				$('#guildo').animate({left: '+=32'}, charSpeed, "linear", function() {
 					charX++;
-					$('#top').html(charY);
-					$('#left').html(charX);
+					console.log("right2: "+charX+","+charY);
 					if (currentKey == currentKeyCheck) moveChar(dir);
 				});
 			}

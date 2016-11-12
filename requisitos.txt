@@ -7,7 +7,7 @@ Requisitos
 	Mostrar personagem protagonista no cenário.
 	Adicionar e Remover blocos de comandos de instruções do Blockly no editor de instruções do personagem.
 	Movimentar  o personagem pelo cenário.
-	Iniciar e pausar instruções sobre o personagem.
+	Iniciar instruções sobre o personagem.
 	Mostrar barra de vida do personagem.
 	Mostrar pontuação atual do personagem.
 	Mostrar movimento do personagem no cenário, com base nas instruções informadas.
