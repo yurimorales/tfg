@@ -1,7 +1,7 @@
 #guildo{
 	position: absolute;
-  	top: 192px; /*starting posX*/
-  	left: 128px; /*starting posY*/
+  	top: 192px; /*posX*/
+  	left: 128px; /*posY*/
 	width: 32px;
 	height: 32px;
 	z-index: 1;

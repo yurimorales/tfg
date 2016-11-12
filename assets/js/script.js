@@ -13,27 +13,29 @@ var mapHeight = 800;//altura do mapa
 
 //Funçao movimenta o personagem
 function moveChar(dir) {
-	
+
 	//Armazena key inicial de animacao
 	var currentKeyCheck = currentKey;
 	
 	//ajuste por parte da position up/down, via codigo
 	if (dir == 'up') dir = 'back';
 	if (dir == 'down') dir = 'front';
-	
+
 	charStep++;
 	if (charStep == 5) charStep = 1;
 	
 	//Remove classe atual do personagem
 	$('#guildo').removeAttr('class');
 	
+	console.log("charStep: "+charStep);
+
 	//Adiciona nova classe
 	switch(charStep) {
-		
+			
 		case 1: 
 			$('#guildo').addClass(dir+'-stand'); 
 			
-			setTimeout(function() { 
+			setTimeout(function() {
 				charStep++;
 				if (charStep == 5) charStep = 1;
 				$('#guildo').removeAttr('class');
@@ -103,7 +105,6 @@ function moveChar(dir) {
 			break;
 	}
 
-	console.log('Indo para:' + dir);
 	//currentKey = currentKey+1;
 
     console.log("currentKey: "+currentKey);
@@ -187,6 +188,7 @@ function chkMove(dir) {
     switch(dir) {
 
 	  case 'front':
+	  case 'down':
 		//Se o personagem é maior do que ou igual a 64px a partir do fundo do mapa
 		//e o personagem não é menos do que ou igual a 64px a partir do topo da fase
 		//e o "mapa" gráfico não é na parte inferior
@@ -202,6 +204,7 @@ function chkMove(dir) {
 	    break;
 
 	  case 'back':
+	  case 'up':
 		//Se o personagem é maior do que ou igual a 64px a partir do fundo do mapa
 		//e o personagem não é menos do que ou igual a 64px a partir do topo da fase
 		//e o "mapa" gráfico não é na parte superior
