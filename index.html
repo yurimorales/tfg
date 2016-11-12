@@ -32,7 +32,10 @@
 			<div id="DivBlockly"></div>
 			<xml id="toolbox" style="display:none">
 				<category name="Comandos" colour="330">
-					<block type="move"></block>
+					<block type="move_right"></block>
+					<block type="move_left"></block>
+					<block type="move_front"></block>
+					<block type="move_back"></block>
 					<block type="turn_left"></block>
 					<block type="turn_right"></block>
 				</category>
@@ -58,12 +61,6 @@
 	<br/>
 	<br/>
 	<br/>
-	<!-- <div class="showPosition">
-		<div>Pos:</div>
-		<div id="left"></div>
-		<div>:</div>
-		<div id="top"></div>
-	</div>-->
 <script src="assets/components/google-blockly/blockly_compressed.js"></script>
 <script src="assets/components/google-blockly/blocks_compressed.js"></script>
 <script src="assets/components/google-blockly/javascript_compressed.js"></script>
@@ -78,30 +75,66 @@
 	Blockly.JavaScript.addReservedWords('highlightBlock','code');
 	
 	//https://blockly-demo.appspot.com/static/demos/blockfactory/index.html
-	Blockly.Blocks['move'] = {
+	Blockly.Blocks['move_front'] = {
 		init: function() {
 			this.appendDummyInput()
-				.appendField("avançar");
+				.appendField("avançar p/ cima");
 			this.setInputsInline(false);
 			this.setPreviousStatement(true, null);
 			this.setNextStatement(true, null);
 			this.setColour(290);
 			this.setTooltip('');
-			this.setHelpUrl('http://www.google.com.br/');
 	  	}
 	}
 	
+	Blockly.Blocks['move_back'] = {
+		init: function() {
+			this.appendDummyInput()
+				.appendField("avançar p/ tras");
+			this.setInputsInline(false);
+			this.setPreviousStatement(true, null);
+			this.setNextStatement(true, null);
+			this.setColour(290);
+			this.setTooltip('');
+	  	}
+	}
+
+
+	Blockly.Blocks['move_right'] = {
+		init: function() {
+			this.appendDummyInput()
+				.appendField("avançar p/ direita");
+			this.setInputsInline(false);
+			this.setPreviousStatement(true, null);
+			this.setNextStatement(true, null);
+			this.setColour(290);
+			this.setTooltip('');
+	  	}
+	}
+
+	Blockly.Blocks['move_left'] = {
+		init: function() {
+			this.appendDummyInput()
+				.appendField("avançar p/ esquerda");
+			this.setInputsInline(false);
+			this.setPreviousStatement(true, null);
+			this.setNextStatement(true, null);
+			this.setColour(290);
+			this.setTooltip('');
+	  	}
+	}
+
 	Blockly.Blocks['turn_left'] = {
 		init: function() {
 			this.appendDummyInput()
 			    .appendField("vire à")
-			    .appendField(new Blockly.FieldDropdown([["esquerda ↺", "Esquerda"], ["direita ↻", "Direita"]]), "NAME");
+			    .appendField(new Blockly.FieldDropdown([["esquerda ↺", "Esquerda"]]), "NAME");
 			this.setInputsInline(true);
 			this.setPreviousStatement(true, null);
 	    	this.setNextStatement(true, null);
 			this.setColour(290);
 			this.setTooltip('');
-			this.setHelpUrl('https://pt.wikipedia.org/wiki/JavaScript');
+			//this.setHelpUrl('https://pt.wikipedia.org/wiki/JavaScript');
 		}
 	};
 	
@@ -109,13 +142,13 @@
 		init: function() {
 			this.appendDummyInput()
 			    .appendField("vire à")
-			    .appendField(new Blockly.FieldDropdown([["direita ↻", "Direita"], ["esquerda ↺", "Esquerda"]]), "NAME");
+			    .appendField(new Blockly.FieldDropdown([["direita ↻", "Direita"]]), "NAME");
 			this.setInputsInline(true);
 			this.setPreviousStatement(true, null);
 	    	this.setNextStatement(true, null);
 			this.setColour(290);
 			this.setTooltip('');
-			this.setHelpUrl('https://developers.google.com/blockly/');
+			//this.setHelpUrl('https://developers.google.com/blockly/');
 		}
 	};
 		
@@ -142,37 +175,14 @@
 	    return 'turnRight(\'' + dropdown_name + '\');\n';
 	};
 
-	// var myInterpreter = null;
- //    function interpret(){
-	// 	var code = Blockly.JavaScript.workspaceToCode(workspace);
-		
-	// 	myInterpreter = new Interpreter(code,initApi);
-	// 	Blockly.JavaScript.STATEMENT_PREFIX = 'moveUp(%1);\n';
-		
-	// 	myInterpreter.run();
- //    }
-    
-	// function initApi(interpreter, scope){
-		
-	// 	var wrapper = function(id) {
-	// 		id = id ? id.toString() : '';
-	// 		return interpreter.createPrimitive(moveUp(id));
-	// 	};
-	// 	interpreter.setProperty(scope, 'moveUp',
-	// 	interpreter.createNativeFunction(wrapper));
-		
- //    }
-
  	//http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
 	//http://stackoverflow.com/questions/36499757/how-can-i-make-an-instance-of-a-block-of-blockly-with-javascript
 	//http://stackoverflow.com/questions/20129236/creating-functions-dynamically-in-js
 	//https://developers.google.com/blockly/guides/app-integration/running-javascript
 	
-	// var highlightPause = false;
 	function move() {
-		// highlightPause = true;
 		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0){
-			console.log("Ordeno que vc caminhe... pos[" + charX + "," + charY + "]");
+			console.log("position atual [" + charX + "," + charY + "]");
 			
 			//currentKey = 40;
 			//moveChar('down');

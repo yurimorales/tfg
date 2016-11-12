@@ -1,0 +1,4 @@
+Para executar o jogo, basta abrir o arquivo index.html,
+localizado na raiz da pasta do projeto, o arquivo deve ser aberto com
+um navegador atualizado, de preferencia o Firefox versao 49.0, onde foram
+realizados os testes ao longo do desenvolvimento.
