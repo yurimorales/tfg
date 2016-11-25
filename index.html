@@ -4,10 +4,10 @@
 	<meta charset="utf-8">
 	<meta name="guildo-game" value="notranslate">
 	<meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no">
-	<meta name="description" content="Guildo game development.">
+	<meta name="description" content="">
 	<title>Guildo Game</title>
 	<link rel="stylesheet" href="assets/components/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/css/init.css">
+	<link rel="stylesheet" href="assets/css/default.css">
 	<link rel="stylesheet" href="assets/css/personagem.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-md-4">
 			<h4>Pontuação:
-				<div style="display:inline-block;" id="pontuacao-atual">0</div>
+				<div id="pontuacao-atual">0</div>
 			</h4>
 		</div>
 	</div>
@@ -28,6 +28,7 @@
 		</div>
 		<br/>
 		<div class="col-md-5">
+			<!-- comandos blockly -->
 			<div id="DivBlockly"></div>
 			<xml id="toolbox" style="display:none">
 				<category name="Comandos" colour="330">
@@ -43,7 +44,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-md-8">
 			<div class="col-sm-10">
-				<img style="display:inline;margin-top:-40px;" src="images/heart.png" width="50" height="50"/>
+				<img style="display:inline;margin-top:-40px;" src="images/heart.png" width="50" height="50" />
 				<div id="div-barra-vida">
 					<div id="barra-vida"></div>
 				</div>
@@ -67,21 +68,21 @@
 	</div>
 
 	<div id="objetivos" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Objetivos</h4>
-	      </div>
-	      <div class="modal-body">
-	        <p>Encontre a caverna!</p>
-	        <p>Ao encontrar, entre para ir a próxima fase.</p>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-	      </div>
-	    </div>
-	  </div>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Objetivos</h4>
+				</div>
+				<div class="modal-body">
+					<p>Encontre a caverna!</p>
+					<p>Ao encontrar, entre e prossiga para a próxima fase.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+  		</div>
 	</div>
 <br/>
 <br/>
@@ -93,512 +94,14 @@
 <script src="assets/components/jquery/dist/jquery.min.js"></script>
 <script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/js/script.js"></script>
-<script type="text/javascript">
-
-	//Load dos commandos do blockly
-	var workspace = Blockly.inject('DivBlockly',{ toolbox: document.getElementById('toolbox') });
-	Blockly.JavaScript.addReservedWords('code','move_top','move_bottom','move_right','move_left');
+<script>
 	
-	//https://blockly-demo.appspot.com/static/demos/blockfactory/index.html
-	Blockly.Blocks['move_top'] = {
-		init: function() {
-			this.appendDummyInput()
-				.appendField("mover para cima");
-			this.setInputsInline(false);
-			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-	  	}
-	}
-	
-	Blockly.Blocks['move_bottom'] = {
-		init: function() {
-			this.appendDummyInput()
-				.appendField("mover para baixo");
-			this.setInputsInline(false);
-			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-	  	}
-	}
+	$(document).ready(function(){
 
-
-	Blockly.Blocks['move_right'] = {
-		init: function() {
-			this.appendDummyInput()
-				.appendField("mover para a direita");
-			this.setInputsInline(false);
-			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-	  	}
-	}
-
-	Blockly.Blocks['move_left'] = {
-		init: function() {
-			this.appendDummyInput()
-				.appendField("mover para a esquerda");
-			this.setInputsInline(false);
-			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-	  	}
-	}
-
-
-	Blockly.JavaScript['move_top'] = function(block) {
-		charStep++;
-		if (charStep == 5) charStep = 1;
-		
-		//Remove classe atual do personagem
-		$('#guildo').removeAttr('class');
-
-		//Adiciona nova classe
-		switch(charStep) {
-				
-			case 1: 
-				$('#guildo').addClass('back-stand'); 
-				
-				setTimeout(function(){
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('back-right'); 
-				}, (charSpeed/3));
-				
-				setTimeout(function(){
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('back-stand'); 
-				}, ((charSpeed/3)*2));
-				break;
-
-			case 2: 
-				$('#guildo').addClass('back-right');
-
-				setTimeout(function(){
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('back-stand'); 
-				}, (charSpeed/3));
-
-				setTimeout(function(){
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('back-left'); 
-				}, ((charSpeed/3)*2));
-				break;
-
-			case 3: 
-		      	$('#guildo').addClass('back-stand');
-
-				setTimeout(function(){
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('back-left'); 
-				}, (charSpeed/3));
-
-				setTimeout(function(){
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('back-stand'); 
-					}, ((charSpeed/3)*2)); 
-		    	break;
-
-			case 4: 
-				$('#guildo').addClass('back-left');
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('back-stand'); 
-					}, (charSpeed/3));
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-						$('#guildo').removeAttr('class');
-						$('#guildo').addClass('back-right'); 
-					}, ((charSpeed/3)*2));
-				break;
-		}
-		
-		if (chkMove('back') == 'mapa') {
-			var codeMoveTop = "$(\"#mapa\").animate({\n top: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY--)+"; });";
-
-		}else if (chkMove('back') == 'guildo') {
-			var codeMoveTop = "$(\"#guildo\").animate({\n top: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY--)+"; });"
-		}
-
-		return codeMoveTop;
-		/*
-		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) { // < 2
-			
-			currentKey = 38;
-			moveChar('up');
-			currentKey = false;
-		}
-		*/
-	};
-
-	Blockly.JavaScript['move_bottom'] = function(block) {
-		charStep++;
-		if (charStep == 5) charStep = 1;		
-		//Remove classe atual do personagem
-		$('#guildo').removeAttr('class');
-		switch(charStep) {
-				
-			case 1: 
-				$('#guildo').addClass('front-stand'); 
-				
-				setTimeout(function() {
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('front-right'); 
-				}, (charSpeed/3));
-				
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('front-stand'); 
-				}, ((charSpeed/3)*2));
-				break;
-
-			case 2: 
-				$('#guildo').addClass('front-right');
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('front-stand'); 
-				}, (charSpeed/3));
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('front-left'); 
-				}, ((charSpeed/3)*2));
-				break;
-
-			case 3: 
-		      	$('#guildo').addClass('front-stand');
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('front-left'); 
-				}, (charSpeed/3));
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('front-stand'); 
-					}, ((charSpeed/3)*2)); 
-		    	break;
-
-			case 4: 
-				$('#guildo').addClass('front-left');
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('front-stand'); 
-					}, (charSpeed/3));
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-						$('#guildo').removeAttr('class');
-						$('#guildo').addClass('front-right'); 
-					}, ((charSpeed/3)*2));
-				break;
-		}
-		
-		if (chkMove('front') == 'mapa') {
-			var codeMoveBottom = "$(\"#mapa\").animate({\n top: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });";
-
-		}else if (chkMove('front') == 'guildo') {
-			var codeMoveBottom = "$(\"#guildo\").animate({\n top: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });"
-		}
-
-		return codeMoveBottom;
-		/*
-		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) { // < 2
-			currentKey = 40;
-			moveChar('down');
-			currentKey = false;
-		}
-		*/
-	};
-
-	Blockly.JavaScript['move_left'] = function(block) {
-		charStep++;
-		if (charStep == 5) charStep = 1;		
-		//Remove classe atual do personagem
-		$('#guildo').removeAttr('class');
-		switch(charStep) {
-				
-			case 1: 
-				$('#guildo').addClass('left-stand'); 
-				
-				setTimeout(function() {
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('left-right'); 
-				}, (charSpeed/3));
-				
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('left-stand'); 
-				}, ((charSpeed/3)*2));
-				break;
-
-			case 2: 
-				$('#guildo').addClass('left-right');
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('left-stand'); 
-				}, (charSpeed/3));
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('left-left'); 
-				}, ((charSpeed/3)*2));
-				break;
-
-			case 3: 
-		      	$('#guildo').addClass('left-stand');
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('left-left'); 
-				}, (charSpeed/3));
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('left-stand'); 
-					}, ((charSpeed/3)*2)); 
-		    	break;
-
-			case 4: 
-				$('#guildo').addClass('left-left');
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('left-stand'); 
-					}, (charSpeed/3));
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-						$('#guildo').removeAttr('class');
-						$('#guildo').addClass('left-right'); 
-					}, ((charSpeed/3)*2));
-				break;
-		}
-		
-		if (chkMove('left') == 'mapa') {
-			var codeMoveLeft = "$(\"#mapa\").animate({\n left: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX--)+"; });";
-
-		}else if (chkMove('left') == 'guildo') {
-			var codeMoveLeft = "$(\"#guildo\").animate({\n left: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX--)+"; });"
-		}
-
-		return codeMoveLeft;
-		/*
-		if ($("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) { // < 2
-			//Define a key atual
-			currentKey = 37;
-			moveChar('left');
-			//Para a execuçao
-			currentKey = false;
-		}
-		*/
-	};
-
-	Blockly.JavaScript['move_right'] = function(block) {
-		charStep++;
-		if (charStep == 5) charStep = 1;		
-		//Remove classe atual do personagem
-		$('#guildo').removeAttr('class');
-		switch(charStep) {
-				
-			case 1: 
-				$('#guildo').addClass('right-stand'); 
-				
-				setTimeout(function() {
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('right-right'); 
-				}, (charSpeed/3));
-				
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('right-stand'); 
-				}, ((charSpeed/3)*2));
-				break;
-
-			case 2: 
-				$('#guildo').addClass('right-right');
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('right-stand'); 
-				}, (charSpeed/3));
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('right-left'); 
-				}, ((charSpeed/3)*2));
-				break;
-
-			case 3: 
-		      	$('#guildo').addClass('right-stand');
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('right-left'); 
-				}, (charSpeed/3));
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('right-stand'); 
-					}, ((charSpeed/3)*2)); 
-		    	break;
-
-			case 4: 
-				$('#guildo').addClass('right-left');
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-					$('#guildo').removeAttr('class');
-					$('#guildo').addClass('right-stand'); 
-					}, (charSpeed/3));
-
-				setTimeout(function() { 
-					charStep++;
-					if (charStep == 5) charStep = 1;
-						$('#guildo').removeAttr('class');
-						$('#guildo').addClass('right-right'); 
-					}, ((charSpeed/3)*2));
-				break;
-		}
-		
-		if (chkMove('right') == 'mapa') {
-			var codeMoveRight = "$(\"#mapa\").animate({\n left: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX++)+"; });";
-
-		}else if (chkMove('right') == 'guildo') {
-			var codeMoveLeft = "$(\"#guildo\").animate({\n left: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX++)+"; });"
-		}
-
-		return codeMoveRight;
-
-		/*
-		if ($("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) { // < 2
-			//Define a key atual
-			currentKey = 39;
-			moveChar('right');
-			//Para a execuçao
-			currentKey = false;
-
-		}
-		*/
-	};
-
- 	//http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
-	//http://stackoverflow.com/questions/36499757/how-can-i-make-an-instance-of-a-block-of-blockly-with-javascript
-	//http://stackoverflow.com/questions/20129236/creating-functions-dynamically-in-js
-	//https://developers.google.com/blockly/guides/app-integration/running-javascript
-	function showCode(){
-		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-		var code = Blockly.JavaScript.workspaceToCode(workspace);
-		alert(code);
-	}
-
-	function runCode(){
-		window.LoopTrap = 1000;
-		Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-		
-		var code = Blockly.JavaScript.workspaceToCode(workspace);
-		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-		try {
-			
-			eval(code);
-			
-		} catch (e) {
-			alert('Erro:'+e);
-		}
-	}
-	
-	//Restaurando valor inicial das variaveis setadas no localStorage
-
-	function updateAllValues() {
-			
-		if(!localStorage.getItem('pontuacao')){
-			localStorage.setItem('pontuacao', 0);
-		}
-		if(!localStorage.getItem('percentual_vida')){
-			localStorage.setItem('percentual_vida', 100);
-		}
-		if(!localStorage.getItem('charX')){
-			localStorage.setItem('charX', 4);
-		}
-		if(!localStorage.getItem('charY')){
-			localStorage.setItem('charY', 6);
-		}
-
-		$("#pontuacao-atual").html(localStorage.getItem('pontuacao'));
-		$("#barra-vida").css("width",""+localStorage.getItem('percentual_vida')+"%");
-	}
-
-    $(document).ready(function(){
-    	
-    	setInterval(function() {
-	    	updateAllValues();
-		},3000);
+    	//Interval de update valores globais do jogo
+		// setInterval(function(){
+		// 	updateAllValues();
+		// },3000);
 
 		$("#iniciar").on('click',function(){
 			runCode();
@@ -606,58 +109,16 @@
 
 		$("#reiniciar").on('click',function(){
 
-			localStorage.setItem('pontuacao', 0);
-			localStorage.setItem('percentual_vida', 100);
-			localStorage.setItem('charX', 4);
-			localStorage.setItem('charY', 6);
-			//window.location = window.location;
-			//localStorage.clear();
-			location.reload(); 
+			localStorage.setItem('pontuacao',0);
+			localStorage.setItem('percentual_vida',100);
+			localStorage.setItem('charX',4);
+			localStorage.setItem('charY',6);
+			location.reload();
+			
 		});
-
-		//Carrega estado atual do personagem
-		$('#guildo').addClass('front-stand');
+		
     });
 
-    //keyDown Função
-	$(document).keydown(function(e){
-
-		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
-
-			//Define a key atual
-			currentKey = e.keyCode;
-			//Executa a função de movimento do personagem moveChar("<direcao>")
-			switch(e.keyCode) {
-
-				case 38: 
-					moveChar('up');
-					break;
-				case 39:
-					moveChar('right');
-					break;
-				case 40:
-					moveChar('down');
-					break;
-				case 37:
-					moveChar('left');
-					break;
-			}
-
-		}
-
-	});
-	
-	//KeyUp Função
-	$(document).keyup(function(e) {
-
-		//Não para a caminhada se o jogador está pressionando outros botões
-		//Só para a caminhada se a chave que começou a caminhada é liberada
-		if (e.keyCode == currentKey) {
-			//Define a chave atual como false, isso permite uma nova chave de ser informada
-			currentKey = false;
-		}
-		
-	});
 </script>
 </body>
 </html>

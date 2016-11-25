@@ -1,6 +1,9 @@
 body{
 	background-color: #f2f2f2;
 }
+#pontuacao-atual{
+	display: inline-block;
+}
 #fase{
 	position:relative;
 	float:left;
@@ -13,14 +16,10 @@ body{
 #mapa{
 	position:absolute;
 	width:800px;
-	height:800px;/*map.jpg*/
+	height:800px;
 	background: url('../../images/cenario01.jpg') no-repeat 0px 0px;
 }
 #DivBlockly{
-	/*position: absolute;
-	top:60px;
-	right:10px;
-	*/
 	height:485px;
 	width:505px;
 }
@@ -32,13 +31,14 @@ body{
 	background:#eee;
 	display: inline-block;
 }
+
 #barra-vida{
 	background:#d9534f;
 	height:100%;
 }
 .btn-xlarge {
     padding: 18px 28px;
-    font-size: 22px; /*change this to your desired size*/
+    font-size: 22px;
     line-height: normal;
     -webkit-border-radius: 8px;
    -moz-border-radius: 8px;
