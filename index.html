@@ -27,15 +27,22 @@
 			</div>
 		</div>
 		<br/>
+
 		<div class="col-md-5">
-			<!-- comandos blockly -->
 			<div id="DivBlockly"></div>
 			<xml id="toolbox" style="display:none">
+				<category name="Laços de Repetições" colour="260">
+					<block type="controls_repeat_ext"></block>
+					<block type="math_number"></block>
+					<block type="controls_whileUntil"></block>
+				</category>
+				<category name="Condicionais" colour="180">
+					<block type="condicionais"></block>
+				</category>
 				<category name="Comandos" colour="330">
-					<block type="move_top"></block>
-					<block type="move_bottom"></block>
-					<block type="move_right"></block>
-					<block type="move_left"></block>
+					<block type="avancar"></block>
+					<block type="vire_direita"></block>
+					<block type="vire_esquerda"></block>
 				</category>
 			</xml>
 		</div>
@@ -43,6 +50,15 @@
 
 	<div class="row">
 		<div class="col-xs-12 col-md-8">
+
+			<div style="width: 400px; margin: auto auto;">
+				<div style="float:left;">Pos: </div>
+				<div id="left" style="float:left;"></div>
+				<div style="float:left;">:</div>
+				<div id="top" style="float:left;"></div>
+				<div id="debug" style="float:left;margin-left:200px;"></div>
+			</div>
+
 			<div class="col-sm-10">
 				<img style="display:inline;margin-top:-40px;" src="images/heart.png" width="50" height="50" />
 				<div id="div-barra-vida">
@@ -57,10 +73,10 @@
 					<button type="button" class="btn btn-default btn-xlarge dropdown-toggle" type="button" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> Configurações</button>
 					<ul class="dropdown-menu">
 						<li><a href="#" data-toggle="modal" data-target="#objetivos"><i class="glyphicon glyphicon-info-sign"></i> Objetivos</a></li>
-						<!--
+						
 						<li class="divider"></li>
 						<li><a href="#" id="verCodigoFonte" class="dropdown-item"><i class="glyphicon glyphicon-eye-open"></i> Código fonte gerado pelo Blockly</a></li>
-						-->
+						
 					</ul>
 				</div>
 			</div>
@@ -72,7 +88,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Objetivos</h4>
+					<h4 class="modal-title"><i class="glyphicon glyphicon-star"></i> Objetivos</h4>
 				</div>
 				<div class="modal-body">
 					<p>Encontre a caverna!</p>
@@ -96,28 +112,113 @@
 <script src="assets/js/script.js"></script>
 <script>
 	
+	//Load blocos de commandos do Blockly
+	var workspace = Blockly.inject('DivBlockly',{ toolbox: document.getElementById('toolbox') });
+	Blockly.JavaScript.addReservedWords('code','avancar','vire_direita','vire_esquerda');
+
+	function showCode(){
+		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+		var codigo = Blockly.JavaScript.workspaceToCode(workspace);
+		alert(codigo);
+	}
+
+	function runCode(){
+
+		window.LoopTrap = 1000;
+		Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+		
+		var code = Blockly.JavaScript.workspaceToCode(workspace);
+		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+
+		try {
+			
+			eval(code);
+			
+		} catch (e) {
+			alert('Erro:'+e);
+		}
+
+	}
+
 	$(document).ready(function(){
 
-    	//Interval de update valores globais do jogo
-		// setInterval(function(){
-		// 	updateAllValues();
-		// },3000);
+		$('#guildo').addClass('front-stand');
+		$('#top').html(charY);
+		$('#left').html(charX);
+
+    	//Atualiza valores globais do jogo
+    	/*
+		setInterval(function(){
+			updateAllValues();
+		},3000);
+		*/
 
 		$("#iniciar").on('click',function(){
 			runCode();
 		});
-
+		
 		$("#reiniciar").on('click',function(){
-
+			
 			localStorage.setItem('pontuacao',0);
 			localStorage.setItem('percentual_vida',100);
-			localStorage.setItem('charX',4);
-			localStorage.setItem('charY',6);
+			//localStorage.setItem('charX',4);
+			//localStorage.setItem('charY',6);
 			location.reload();
 			
 		});
+
+		$("#verCodigoFonte").on("click",function(){
+			showCode();
+		});
 		
     });
+
+	    //keyDown Função
+	$(document).keydown(function(e){
+
+		if (!currentKey && $("#guildo").queue("fx").length == 0 && $('#mapa').queue("fx").length == 0 ) {
+			//Executa a função de movimento do personagem moveChar("<direcao a ser tomada>")
+			switch(e.keyCode) {
+
+				case 38: 
+					currentKey = 38;
+					moveChar('up');
+					break;
+
+				case 39:
+					currentKey = 39;
+					moveChar('right');
+					break;
+
+				case 40:
+					currentKey = 40;
+					moveChar('down');
+					break;
+
+				case 37:
+					currentKey = 37;
+					moveChar('left');
+					break;
+			}
+
+		}
+
+		$('#debug').html('Current Key: '+currentKey);
+
+	});
+	
+	//KeyUp Função
+	$(document).keyup(function(e) {
+
+		//Não para a caminhada se o jogador está pressionando outros botões
+		//Só para a caminhada se a chave que começou a caminhada é liberado
+		if (e.keyCode == currentKey) {
+			//Define a chave atual como false, isso permite uma nova chave de ser informada
+			currentKey = false;
+		}
+		
+	});
+
 
 </script>
 </body>

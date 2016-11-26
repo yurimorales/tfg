@@ -1,158 +1,164 @@
-//Position x e y do canvas
-var charX = localStorage.getItem('charX'); //1 unit=32px
-var charY = localStorage.getItem('charY'); //1 unit=32px
-
+var currentKey;
 var charStep = 2; //1=1st foot, 2=stand, 3=2nd foot, 4=stand
-var charSpeed = 400; //Velocidade de caminhada do personage,
+var charSpeed = 400; //Velocidade de caminhada do personagem
+
+//Position x e y do canvas
+var charX = 4;//localStorage.getItem('charX');
+var charY = 6;//localStorage.getItem('charY');
 
 //Variaveis globais do jogo
 var stageWidth = 640;
 var stageHeight = 480;
 var mapWidth = 800;//largura mapa
 var mapHeight = 800;//altura do mapa
-
-//Load dos commandos do blockly
-var workspace = Blockly.inject('DivBlockly',{ toolbox: document.getElementById('toolbox') });
-Blockly.JavaScript.addReservedWords('code','move_top','move_bottom','move_right','move_left');
 	
-	Blockly.Blocks['move_top'] = {
+
+	Blockly.Blocks['condicionais'] = {
 		init: function() {
-			this.appendDummyInput()
-				.appendField("mover para cima");
-			this.setInputsInline(false);
+			this.appendValueInput("se")
+			.setCheck("String")
+			.appendField("se existe obstáculo");
+			this.appendStatementInput("entao")
+			.setCheck(null)
+			.appendField("então");
 			this.setPreviousStatement(true, null);
 			this.setNextStatement(true, null);
-			this.setColour(290);
+			this.setColour(180);
 			this.setTooltip('');
-	  	}
-	}
-	
-	Blockly.Blocks['move_bottom'] = {
-		init: function() {
-			this.appendDummyInput()
-				.appendField("mover para baixo");
-			this.setInputsInline(false);
-			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-	  	}
-	}
-
-
-	Blockly.Blocks['move_right'] = {
-		init: function() {
-			this.appendDummyInput()
-				.appendField("mover para a direita");
-			this.setInputsInline(false);
-			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-	  	}
-	}
-
-	Blockly.Blocks['move_left'] = {
-		init: function() {
-			this.appendDummyInput()
-				.appendField("mover para a esquerda");
-			this.setInputsInline(false);
-			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-	  	}
-	}
-
-
-	Blockly.JavaScript['move_top'] = function(block) {
-
-		$('#guildo').removeAttr('class').addClass('back-stand');
-
-		if (chkMove('back') == 'mapa') {
-			var codeMoveTop = "$(\"#mapa\").animate({\n top: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY--)+"; });";
-
-		}else if (chkMove('back') == 'guildo') {
-			var codeMoveTop = "$(\"#guildo\").animate({\n top: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY--)+"; });"
+			this.setHelpUrl('https://en.wikipedia.org/wiki/Conditional_(computer_programming)');
 		}
+	};
+	
+	
+	Blockly.Blocks['avancar'] = {
+		init: function() {
+			this.appendDummyInput()
+				.appendField("avançar");
+			this.setInputsInline(false);
+			this.setPreviousStatement(true, null);
+			this.setNextStatement(true, null);
+			this.setColour(290);
+			this.setTooltip('');
+	  	}
+	}
+	
+	Blockly.Blocks['vire_direita'] = {
+		init: function() {
+			this.appendDummyInput()
+				.appendField("vire à direita");
+			this.setInputsInline(false);
+			this.setPreviousStatement(true, null);
+			this.setNextStatement(true, null);
+			this.setColour(290);
+			this.setTooltip('');
+	  	}
+	}
 
-		return codeMoveTop;
+	Blockly.Blocks['vire_esquerda'] = {
+		init: function() {
+			this.appendDummyInput()
+				.appendField("vire à esquerda");
+			this.setInputsInline(false);
+			this.setPreviousStatement(true, null);
+			this.setNextStatement(true, null);
+			this.setColour(290);
+			this.setTooltip('');
+	  	}
+	}
+
+	Blockly.JavaScript['condicionais'] = function(block) {
+		var value_if = Blockly.JavaScript.valueToCode(block, 'if', Blockly.JavaScript.ORDER_ATOMIC);
+		var statements_then = Blockly.JavaScript.statementToCode(block, 'then');
+		// TODO: Assemble JavaScript into code variable.
+		var condition = 'console.log("aqui eh uma condicional");\n';
+		condition += statements_then+"\n";
 		
+		return condition;
 	};
 
+	Blockly.JavaScript['avancar'] = function(block) {
 
-	Blockly.JavaScript['move_bottom'] = function(block) {
-		
-		$('#guildo').removeAttr('class').addClass('front-stand');
+		//$('#guildo').removeAttr('class').addClass('fron-stand');
 
-		if (chkMove('front') == 'mapa') {
-			var codeMoveBottom = "$(\"#mapa\").animate({\n top: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });";
+		// if (chkMove('back') == 'mapa') {
+		// 	var codeMoveTop = "$(\"#mapa\").animate({\n top: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY--)+"; });";
 
-		}else if (chkMove('front') == 'guildo') {
-			var codeMoveBottom = "$(\"#guildo\").animate({\n top: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });"
-		}
+		// }else if (chkMove('back') == 'guildo') {
+		// 	var codeMoveTop = "$(\"#guildo\").animate({\n top: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY--)+"; });"
+		// }
 
-		return codeMoveBottom;
-		
+		console.log( charX + "," + charY );
+		var codeMove = "console.log('avance');\n";
+		return codeMove;
+			
 	};
 
-
-	Blockly.JavaScript['move_left'] = function(block) {
+	Blockly.JavaScript['vire_esquerda'] = function(block) {
 		
 		$('#guildo').removeAttr('class').addClass('left-stand');
 
-		if (chkMove('left') == 'mapa') {
-			var codeMoveLeft = "$(\"#mapa\").animate({\n left: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX--)+"; });";
+		// if (chkMove('left') == 'mapa') {
 
-		}else if (chkMove('left') == 'guildo') {
-			var codeMoveLeft = "$(\"#guildo\").animate({\n left: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX--)+"; });"
-		}
+		// 	var codeMoveLeft = "$(\"#mapa\").animate({\n left: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX--)+"; });";
 
-		return codeMoveLeft;
-		
+		// } else if (chkMove('left') == 'guildo') {
+
+		// 	var codeMoveLeft = "$(\"#guildo\").animate({\n left: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX--)+"; });"
+
+		// }
+
+		//console.log( charX + "," + charY );
+		var retorno = "console.log('vire a esquerda');\n";
+		return retorno;//codeMoveLeft;
 	};
 
-	Blockly.JavaScript['move_right'] = function(block) {
+	Blockly.JavaScript['vire_direita'] = function(block) {
 		
 		$('#guildo').removeAttr('class').addClass('right-stand');
 
-		if (chkMove('right') == 'mapa') {
+		// if (chkMove('right') == 'mapa') {
 
-			var codeMoveRight = "$(\"#mapa\").animate({\n left: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX++)+"; });";
+		// 	var codeMoveRight = "$(\"#mapa\").animate({\n left: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX++)+"; });";
 
-		}else if (chkMove('right') == 'guildo') {
-			var codeMoveLeft = "$(\"#guildo\").animate({\n left: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX++)+"; });"
-		}
+		// } else if (chkMove('right') == 'guildo') {
 
-		return codeMoveRight;
+		// 	var codeMoveLeft = "$(\"#guildo\").animate({\n left: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX++)+"; });"
 
+		// }
+
+		//console.log( charX + "," + charY );
+		var retorno = "console.log('vire a direita')\n";
+		return retorno;//codeMoveRight;
 	};
-
- 	//http://stackoverflow.com/questions/31988318/google-blockly-jsinterpreter-and-interpreter-step-code
-	//http://stackoverflow.com/questions/36499757/how-can-i-make-an-instance-of-a-block-of-blockly-with-javascript
-	//http://stackoverflow.com/questions/20129236/creating-functions-dynamically-in-js
-	//https://developers.google.com/blockly/guides/app-integration/running-javascript
-	function showCode(){
-		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-		var code = Blockly.JavaScript.workspaceToCode(workspace);
-		alert(code);
-	}
-
-	function runCode(){
-		window.LoopTrap = 1000;
-		Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-		
-		var code = Blockly.JavaScript.workspaceToCode(workspace);
-		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-		try {
-			
-			eval(code);
-			
-		} catch (e) {
-			alert('Erro:'+e);
-		}
-	}
 	
+	// Blockly.JavaScript['move_top'] = function(block) {
+		
+	// 	$('#guildo').removeAttr('class').addClass('back-stand');
+
+	// 	if (chkMove('front') == 'mapa') {
+	// 		var codeMoveTop = "$(\"#mapa\").animate({\n top: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });";
+
+	// 	}else if (chkMove('front') == 'guildo') {
+	// 		var codeMoveTop = "$(\"#guildo\").animate({\n top: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });"
+	// 	}
+	// 	return codeMoveTop;
+	// };	
+
+
+	// Blockly.JavaScript['move_bottom'] = function(block) {
+		
+	// 	$('#guildo').removeAttr('class').addClass('front-stand');
+
+	// 	if (chkMove('front') == 'mapa') {
+	// 		var codeMoveBottom = "$(\"#mapa\").animate({\n top: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });";
+
+	// 	}else if (chkMove('front') == 'guildo') {
+	// 		var codeMoveBottom = "$(\"#guildo\").animate({\n top: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });"
+	// 	}
+	// 	return codeMoveBottom;
+	// };
+
+
 	//Restaurando valor inicial das variaveis setadas no localStorage
 	function updateAllValues() {
 		
@@ -176,6 +182,182 @@ Blockly.JavaScript.addReservedWords('code','move_top','move_bottom','move_right'
 		$("#barra-vida").css("width", localStorage.getItem('percentual_vida')+"%");
 
 	}
+
+
+	function moveChar(dir) {
+
+	//Armazena key inicial de animacao
+	var currentKeyCheck = currentKey;
+
+	//ajuste por parte da longitude, via codigo
+	if (dir == 'up') dir = 'back';
+	if (dir == 'down') dir = 'front';
+
+	charStep++;
+	if (charStep == 5) charStep = 1;
+
+	//Remove classe atual do personagem
+	$('#guildo').removeAttr('class');
+
+	//Adiciona nova classe
+	switch(charStep) {
+
+		case 1: 
+			$('#guildo').addClass(dir+'-stand'); 
+
+			setTimeout(function() { 
+				charStep++;
+				if (charStep == 5) charStep = 1;
+				$('#guildo').removeAttr('class');
+				$('#guildo').addClass(dir+'-right'); 
+			}, (charSpeed/3));
+
+			setTimeout(function() { 
+				charStep++;
+				if (charStep == 5) charStep = 1;
+				$('#guildo').removeAttr('class');
+				$('#guildo').addClass(dir+'-stand'); 
+			}, ((charSpeed/3)*2));
+			break;
+
+		case 2: 
+			$('#guildo').addClass(dir+'-right');
+
+			setTimeout(function() { 
+				charStep++;
+				if (charStep == 5) charStep = 1;
+				$('#guildo').removeAttr('class');
+				$('#guildo').addClass(dir+'-stand'); 
+			}, (charSpeed/3));
+
+			setTimeout(function() { 
+				charStep++;
+				if (charStep == 5) charStep = 1;
+				$('#guildo').removeAttr('class');
+				$('#guildo').addClass(dir+'-left'); 
+			}, ((charSpeed/3)*2));
+			break;
+
+		case 3: 
+	      	$('#guildo').addClass(dir+'-stand');
+
+			setTimeout(function() { 
+				charStep++;
+				if (charStep == 5) charStep = 1;
+				$('#guildo').removeAttr('class');
+				$('#guildo').addClass(dir+'-left'); 
+			}, (charSpeed/3));
+
+			setTimeout(function() { 
+				charStep++;
+				if (charStep == 5) charStep = 1;
+				$('#guildo').removeAttr('class');
+				$('#guildo').addClass(dir+'-stand'); 
+				}, ((charSpeed/3)*2)); 
+	    	break;
+
+		case 4: 
+			$('#guildo').addClass(dir+'-left');
+
+			setTimeout(function() { 
+				charStep++;
+				if (charStep == 5) charStep = 1;
+				$('#guildo').removeAttr('class');
+				$('#guildo').addClass(dir+'-stand'); 
+				}, (charSpeed/3));
+
+			setTimeout(function() { 
+				charStep++;
+				if (charStep == 5) charStep = 1;
+					$('#guildo').removeAttr('class');
+					$('#guildo').addClass(dir+'-right'); 
+				}, ((charSpeed/3)*2));
+			break;
+	}
+
+
+	//Move personagem conforme direcao informada pela variavel dir
+	switch(dir) {
+		
+	    case 'front':
+		    if (chkMove(dir) == 'mapa') {
+		  		$('#mapa').animate({top: '-=32'}, charSpeed, "linear", function() {
+					charY++;
+					$('#top').html(charY);
+					$('#left').html(charX);
+		    		if (currentKey == currentKeyCheck) moveChar(dir);
+			  	});
+			} else if (chkMove(dir) == 'guildo') {
+		  		$('#guildo').animate({top: '+=32'}, charSpeed, "linear", function() {
+		  			charY++;
+					$('#top').html(charY);
+					$('#left').html(charX);
+			    	if (currentKey == currentKeyCheck) moveChar(dir);
+			  	});
+			}
+			break;
+			
+		case 'back':
+			if (chkMove(dir) == 'mapa') {
+				$('#mapa').animate({top: '+=32'}, charSpeed, "linear", function() {
+					charY--;
+					$('#top').html(charY);
+					$('#left').html(charX);
+					if (currentKey == currentKeyCheck) moveChar(dir);
+				});
+			}else if (chkMove(dir) == 'guildo') {
+				$('#guildo').animate({top: '-=32'}, charSpeed, "linear", function() {
+					charY--;
+					$('#top').html(charY);
+					$('#left').html(charX);
+					if (currentKey == currentKeyCheck) moveChar(dir);
+				});
+			}
+			break;
+
+		case 'left':
+			if (chkMove(dir) == 'mapa') {
+				$('#mapa').animate({left: '+=32'}, charSpeed, "linear", function() {
+					charX--;
+					$('#top').html(charY);
+					$('#left').html(charX);
+					if (currentKey == currentKeyCheck) moveChar(dir);
+				});
+			}
+			else if (chkMove(dir) == 'guildo') {
+				$('#guildo').animate({left: '-=32'}, charSpeed, "linear", function() {
+					charX--;
+					$('#top').html(charY);
+					$('#left').html(charX);
+					if (currentKey == currentKeyCheck) moveChar(dir);
+				});
+			}
+			break;
+
+		case'right':
+			if (chkMove(dir) == 'mapa') {
+				$('#mapa').animate({left: '-=32'}, charSpeed, "linear", function() {
+					charX++;
+					$('#top').html(charY);
+					$('#left').html(charX);
+					if (currentKey == currentKeyCheck) moveChar(dir);
+				});
+			}
+			else if (chkMove(dir) == 'guildo') {
+				$('#guildo').animate({left: '+=32'}, charSpeed, "linear", function() {
+					charX++;
+					$('#top').html(charY);
+					$('#left').html(charX);
+					if (currentKey == currentKeyCheck) moveChar(dir);
+				});
+			}
+			break;
+
+	}
+
+}// fim da function moveChar()
+
+
 
 	function chkMove(dir) {
 
