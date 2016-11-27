@@ -31,18 +31,11 @@
 		<div class="col-md-5">
 			<div id="DivBlockly"></div>
 			<xml id="toolbox" style="display:none">
-				<category name="Laços de Repetições" colour="260">
-					<block type="controls_repeat_ext"></block>
-					<block type="math_number"></block>
-					<block type="controls_whileUntil"></block>
-				</category>
-				<category name="Condicionais" colour="180">
-					<block type="condicionais"></block>
-				</category>
 				<category name="Comandos" colour="330">
 					<block type="avancar"></block>
-					<block type="vire_direita"></block>
-					<block type="vire_esquerda"></block>
+					<block type="vire"></block>
+					<block type="repeticao"></block>
+					<block type="condicional"></block>
 				</category>
 			</xml>
 		</div>
@@ -114,7 +107,74 @@
 	
 	//Load blocos de commandos do Blockly
 	var workspace = Blockly.inject('DivBlockly',{ toolbox: document.getElementById('toolbox') });
-	Blockly.JavaScript.addReservedWords('code','avancar','vire_direita','vire_esquerda');
+	
+	Blockly.Blocks['avancar'] = {
+		init: function() {
+			this.appendDummyInput()
+				.appendField("avançar");
+			this.setInputsInline(false);
+			this.setPreviousStatement(true, null);
+			this.setNextStatement(true, null);
+			this.setColour(290);
+			this.setTooltip('Move o personagem para a frente');
+	  	}
+	};
+	
+	Blockly.Blocks['vire'] = {
+		init: function() {
+			this.appendDummyInput()
+			    .appendField("vire à")
+			    .appendField(new Blockly.FieldDropdown([["esquerda ↺", "Esquerda"], ["direita ↻", "Direita"]]), "NAME");
+			this.setInputsInline(true);
+			this.setPreviousStatement(true, null);
+	    	this.setNextStatement(true, null);
+			this.setColour(290);
+			this.setTooltip('Vire o personagem 90 graus para a direita ou esquerda');
+			this.setHelpUrl('https://pt.wikipedia.org/wiki/JavaScript');
+		}
+	};
+
+	Blockly.Blocks['repeticao'] = {
+		init: function() {
+		    this.appendDummyInput()
+		        .appendField("enquanto nao encontrar a caverna, faça");
+		    this.setPreviousStatement(true, null);
+		    this.setNextStatement(true, null);
+		    this.setColour(150);
+		    this.setTooltip('');
+		    this.setHelpUrl('http://www.example.com/');
+		}
+		/*
+		init: function() {
+			this.appendDummyInput()
+			.appendField("enquanto nao encontrar a caverna")
+			this.appendStatementInput("NAME")
+			.setCheck(null)
+			.appendField("faça");
+			this.setPreviousStatement(true, null);
+			this.setColour(150);
+			this.setTooltip('');
+			this.setHelpUrl('http://www.example.com/');
+		}
+		*/
+	};
+
+	Blockly.Blocks['condicional'] = {
+  		init: function() {
+			this.appendDummyInput()
+			.appendField("Se caminho a")
+			.appendField(new Blockly.FieldDropdown([["frente", "Frente"], ["direita", "Direita"], ["esquerda", "Esquerda"]]), "direcao");
+			this.appendStatementInput("NAME")
+			.setCheck(null)
+			.appendField("faça");
+			this.setPreviousStatement(true, null);
+			this.setNextStatement(true, null);
+			this.setColour(210);
+			this.setTooltip('Se existe caminho na direcao escolhida, entao faça algumas acoes');
+			this.setHelpUrl('https://en.wikipedia.org/wiki/Conditional_(computer_programming)');
+	  	}
+
+	};
 
 	function showCode(){
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
@@ -126,18 +186,20 @@
 
 		window.LoopTrap = 1000;
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-		
+
+		Blockly.JavaScript.addReservedWords('code','avancar','vire','condicional','repeticao');
 		var code = Blockly.JavaScript.workspaceToCode(workspace);
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
 		try {
 			
 			eval(code);
-			
+			alert(code);
+
 		} catch (e) {
 			alert('Erro:'+e);
 		}
-
+		
 	}
 
 	$(document).ready(function(){

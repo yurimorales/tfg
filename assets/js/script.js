@@ -2,7 +2,7 @@ var currentKey;
 var charStep = 2; //1=1st foot, 2=stand, 3=2nd foot, 4=stand
 var charSpeed = 400; //Velocidade de caminhada do personagem
 
-//Position x e y do canvas
+//Position x e y canvas
 var charX = 4;//localStorage.getItem('charX');
 var charY = 6;//localStorage.getItem('charY');
 
@@ -12,68 +12,11 @@ var stageHeight = 480;
 var mapWidth = 800;//largura mapa
 var mapHeight = 800;//altura do mapa
 	
-
-	Blockly.Blocks['condicionais'] = {
-		init: function() {
-			this.appendValueInput("se")
-			.setCheck("String")
-			.appendField("se existe obstáculo");
-			this.appendStatementInput("entao")
-			.setCheck(null)
-			.appendField("então");
-			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
-			this.setColour(180);
-			this.setTooltip('');
-			this.setHelpUrl('https://en.wikipedia.org/wiki/Conditional_(computer_programming)');
-		}
-	};
-	
-	
-	Blockly.Blocks['avancar'] = {
-		init: function() {
-			this.appendDummyInput()
-				.appendField("avançar");
-			this.setInputsInline(false);
-			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-	  	}
-	}
-	
-	Blockly.Blocks['vire_direita'] = {
-		init: function() {
-			this.appendDummyInput()
-				.appendField("vire à direita");
-			this.setInputsInline(false);
-			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-	  	}
-	}
-
-	Blockly.Blocks['vire_esquerda'] = {
-		init: function() {
-			this.appendDummyInput()
-				.appendField("vire à esquerda");
-			this.setInputsInline(false);
-			this.setPreviousStatement(true, null);
-			this.setNextStatement(true, null);
-			this.setColour(290);
-			this.setTooltip('');
-	  	}
-	}
-
-	Blockly.JavaScript['condicionais'] = function(block) {
-		var value_if = Blockly.JavaScript.valueToCode(block, 'if', Blockly.JavaScript.ORDER_ATOMIC);
-		var statements_then = Blockly.JavaScript.statementToCode(block, 'then');
-		// TODO: Assemble JavaScript into code variable.
-		var condition = 'console.log("aqui eh uma condicional");\n';
-		condition += statements_then+"\n";
-		
-		return condition;
+	Blockly.JavaScript['repeticao'] = function(block) {
+	  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+	  // TODO: Assemble JavaScript into code variable.
+	  var code = 'console.log("while");\n';
+	  return code;
 	};
 
 	Blockly.JavaScript['avancar'] = function(block) {
@@ -87,15 +30,15 @@ var mapHeight = 800;//altura do mapa
 		// 	var codeMoveTop = "$(\"#guildo\").animate({\n top: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY--)+"; });"
 		// }
 
-		console.log( charX + "," + charY );
-		var codeMove = "console.log('avance');\n";
+		//console.log( charX + "," + charY );
+		var codeMove = "console.log('mover');\n";
 		return codeMove;
 			
 	};
 
-	Blockly.JavaScript['vire_esquerda'] = function(block) {
+	Blockly.JavaScript['vire'] = function(block) {
 		
-		$('#guildo').removeAttr('class').addClass('left-stand');
+		//$('#guildo').removeAttr('class').addClass('left-stand');
 
 		// if (chkMove('left') == 'mapa') {
 
@@ -108,29 +51,18 @@ var mapHeight = 800;//altura do mapa
 		// }
 
 		//console.log( charX + "," + charY );
-		var retorno = "console.log('vire a esquerda');\n";
+		var retorno = "console.log('vire left/right');\n";
 		return retorno;//codeMoveLeft;
 	};
-
-	Blockly.JavaScript['vire_direita'] = function(block) {
-		
-		$('#guildo').removeAttr('class').addClass('right-stand');
-
-		// if (chkMove('right') == 'mapa') {
-
-		// 	var codeMoveRight = "$(\"#mapa\").animate({\n left: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX++)+"; });";
-
-		// } else if (chkMove('right') == 'guildo') {
-
-		// 	var codeMoveLeft = "$(\"#guildo\").animate({\n left: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX++)+"; });"
-
-		// }
-
-		//console.log( charX + "," + charY );
-		var retorno = "console.log('vire a direita')\n";
-		return retorno;//codeMoveRight;
-	};
 	
+	Blockly.JavaScript['condicional'] = function(block) {
+		var dropdown_direcao = block.getFieldValue('direcao');
+		var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+		// TODO: Assemble JavaScript into code variable.
+		var code = 'console.log("condicional if");\n';
+		return code;
+	};
+
 	// Blockly.JavaScript['move_top'] = function(block) {
 		
 	// 	$('#guildo').removeAttr('class').addClass('back-stand');
@@ -184,7 +116,7 @@ var mapHeight = 800;//altura do mapa
 	}
 
 
-	function moveChar(dir) {
+function moveChar(dir) {
 
 	//Armazena key inicial de animacao
 	var currentKeyCheck = currentKey;
