@@ -1,95 +1,208 @@
-var currentKey;
-var charStep = 2; //1=1st foot, 2=stand, 3=2nd foot, 4=stand
-var charSpeed = 400; //Velocidade de caminhada do personagem
+	var currentKey;
+	var charStep = 2; //1=1st foot, 2=stand, 3=2nd foot, 4=stand
+	var charSpeed = 400; //Velocidade de caminhada do personagem
 
-//Position x e y canvas
-var charX = 4;//localStorage.getItem('charX');
-var charY = 6;//localStorage.getItem('charY');
+	//Position x e y canvas
+	var charX = 4;//localStorage.getItem('charX');
+	var charY = 6;//localStorage.getItem('charY');
 
-//Variaveis globais do jogo
-var stageWidth = 640;
-var stageHeight = 480;
-var mapWidth = 800;//largura mapa
-var mapHeight = 800;//altura do mapa
+	//Variaveis globais do jogo
+	var stageWidth = 640;
+	var stageHeight = 480;
+	var mapWidth = 800;//largura mapa
+	var mapHeight = 800;//altura do mapa
 	
-	Blockly.JavaScript['repeticao'] = function(block) {
-	  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
-	  // TODO: Assemble JavaScript into code variable.
-	  var code = 'console.log("while");\n';
-	  return code;
-	};
+	Blockly.JavaScript['decisao'] = function(block) {
 
-	Blockly.JavaScript['avancar'] = function(block) {
-
-		//$('#guildo').removeAttr('class').addClass('fron-stand');
-
-		// if (chkMove('back') == 'mapa') {
-		// 	var codeMoveTop = "$(\"#mapa\").animate({\n top: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY--)+"; });";
-
-		// }else if (chkMove('back') == 'guildo') {
-		// 	var codeMoveTop = "$(\"#guildo\").animate({\n top: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY--)+"; });"
-		// }
-
-		//console.log( charX + "," + charY );
-		var codeMove = "console.log('mover');\n";
-		return codeMove;
-			
-	};
-
-	Blockly.JavaScript['vire'] = function(block) {
+		var dropdown_option = block.getFieldValue('OPTION');
+		var statements_fa_a = Blockly.JavaScript.statementToCode(block, 'FAÇA');
 		
-		//$('#guildo').removeAttr('class').addClass('left-stand');
+		if(dropdown_option == 'LEFT'){
+			var code = 'if (isPathLeft()){\n'+statements_fa_a+'}\n';
+		}else{
+			var code = 'if (isPathRight()){\n'+statements_fa_a+'}\n';
+		}
 
-		// if (chkMove('left') == 'mapa') {
-
-		// 	var codeMoveLeft = "$(\"#mapa\").animate({\n left: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX--)+"; });";
-
-		// } else if (chkMove('left') == 'guildo') {
-
-		// 	var codeMoveLeft = "$(\"#guildo\").animate({\n left: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charX--)+"; });"
-
-		// }
-
-		//console.log( charX + "," + charY );
-		var retorno = "console.log('vire left/right');\n";
-		return retorno;//codeMoveLeft;
-	};
-	
-	Blockly.JavaScript['condicional'] = function(block) {
-		var dropdown_direcao = block.getFieldValue('direcao');
-		var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
-		// TODO: Assemble JavaScript into code variable.
-		var code = 'console.log("condicional if");\n';
 		return code;
 	};
 
-	// Blockly.JavaScript['move_top'] = function(block) {
+	Blockly.JavaScript['loop'] = function(block) {
+
+		var statements_fa_a = Blockly.JavaScript.statementToCode(block, 'FAÇA');
+		var code = 'while(notDone()){\n '+statements_fa_a+'}\n';
+		return code;
+
+	};
+
+	Blockly.JavaScript['mover_cima'] = function(block) {
+		var code = "moveTop();\n";
+		return code;
+	};
+
+	Blockly.JavaScript['mover_baixo'] = function(block) {
+		var code = "moveBottom();\n";
+		return code;
+	};
+
+	Blockly.JavaScript['mover_direita'] = function(block) {
+		var code = "moveRight();\n";
+		return code;
+	};
+
+	Blockly.JavaScript['mover_esquerda'] = function(block) {
+		var code = "moveLeft();\n";
+		return code;
+	};
+
+	Blockly.JavaScript['vire'] = function(block) {
+		var direcao = block.getFieldValue('VIRE');
+		if( direcao == 'LEFT' ){
+			var code = "turnLeft();\n";
+		}else{
+			var code = "turnRight();\n";
+		}
+		return code;
+	};
+
+	function moveRight(){
+
+		$('#guildo').removeAttr('class').addClass('right-stand');
 		
-	// 	$('#guildo').removeAttr('class').addClass('back-stand');
+		var dir = 'right';
+		moveChar(dir);
 
-	// 	if (chkMove('front') == 'mapa') {
-	// 		var codeMoveTop = "$(\"#mapa\").animate({\n top: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });";
+		if (chkMove(dir) == 'mapa') {
+			$('#mapa').animate({left: '-=32'}, charSpeed, "linear", function() {
+				charX++;
+				$('#top').html(charY);
+				$('#left').html(charX);
+				//moveChar(dir);
+			});
 
-	// 	}else if (chkMove('front') == 'guildo') {
-	// 		var codeMoveTop = "$(\"#guildo\").animate({\n top: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });"
-	// 	}
-	// 	return codeMoveTop;
-	// };	
+		}else if (chkMove(dir) == 'guildo') {
+			$('#guildo').animate({left: '+=32'}, charSpeed, "linear", function() {
+				charX++;
+				$('#top').html(charY);
+				$('#left').html(charX);
+				//moveChar(dir);
+			});
 
+		}
+	}
 
-	// Blockly.JavaScript['move_bottom'] = function(block) {
+	function moveLeft(){
 		
-	// 	$('#guildo').removeAttr('class').addClass('front-stand');
+		$('#guildo').removeAttr('class').addClass('left-stand');
+		
+		var dir = 'left';
+		moveChar(dir);
 
-	// 	if (chkMove('front') == 'mapa') {
-	// 		var codeMoveBottom = "$(\"#mapa\").animate({\n top: \"-=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });";
+		if (chkMove(dir) == 'mapa') {
+			$('#mapa').animate({left: '+=32'}, charSpeed, "linear", function() {
+				charX--;
+				$('#top').html(charY);
+				$('#left').html(charX);
+				//moveChar(dir);
+			});
 
-	// 	}else if (chkMove('front') == 'guildo') {
-	// 		var codeMoveBottom = "$(\"#guildo\").animate({\n top: \"+=32\"}, "+charSpeed+", \"linear\", function() {\n "+(charY++)+"; });"
-	// 	}
-	// 	return codeMoveBottom;
-	// };
+		}else if (chkMove(dir) == 'guildo') {
+			$('#guildo').animate({left: '-=32'}, charSpeed, "linear", function() {
+				charX--;
+				$('#top').html(charY);
+				$('#left').html(charX);
+				//moveChar(dir);
+			});
 
+		}
+	}
+
+	function moveTop(){
+
+		$('#guildo').removeAttr('class').addClass('back-stand');
+		
+		var dir = 'up';
+		moveChar(dir);
+
+		if (chkMove(dir) == 'mapa') {
+			$('#mapa').animate({top: '+=32'}, charSpeed, "linear", function() {
+				charY--;
+				$('#top').html(charY);
+				$('#left').html(charX);
+				//moveChar(dir);
+			});
+
+		}else if (chkMove(dir) == 'guildo') {
+			$('#guildo').animate({top: '-=32'}, charSpeed, "linear", function() {
+				charY--;
+				$('#top').html(charY);
+				$('#left').html(charX);
+				//moveChar(dir);
+			});
+
+		}
+
+	}
+
+	function moveBottom(){
+		
+		$('#guildo').removeAttr('class').addClass('front-stand');
+		
+		var dir = 'down';
+		moveChar(dir);
+
+	    if (chkMove(dir) == 'mapa') {
+	  		$('#mapa').animate({top: '-=32'}, charSpeed, "linear", function() {
+				charY++;
+				$('#top').html(charY);
+				$('#left').html(charX);
+	    		//moveChar(dir);
+		  	});
+
+		} else if (chkMove(dir) == 'guildo') {
+	  		$('#guildo').animate({top: '+=32'}, charSpeed, "linear", function() {
+	  			charY++;
+				$('#top').html(charY);
+				$('#left').html(charX);
+		    	//moveChar(dir);
+		  	});
+
+		}	
+	}
+
+	function turnLeft(){
+		$('#guildo').removeAttr('class').addClass('left-stand');
+	}
+
+	function turnRight(){
+		$('#guildo').removeAttr('class').addClass('right-stand');
+	}
+
+	function notDone(){
+		
+		if( charX == 23 && charY == 5){
+			alert('Encontrou :)');
+			return false;
+		}
+		else{
+			return false;
+		}
+	}
+
+	function isPathLeft(){
+		if( (charX > 24 || charX < 0) && (charY > 24 || charY < 0) ){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	function isPathRight(){
+		if( (charX > 24 || charX < 0) && (charY > 24 || charY < 0) ){
+		 	return false;
+		}else{
+			return true;
+		}
+	}
 
 	//Restaurando valor inicial das variaveis setadas no localStorage
 	function updateAllValues() {
@@ -116,179 +229,183 @@ var mapHeight = 800;//altura do mapa
 	}
 
 
-function moveChar(dir) {
+	function moveChar(dir) {
 
-	//Armazena key inicial de animacao
-	var currentKeyCheck = currentKey;
+		//Armazena key inicial de animacao
+		// var currentKeyCheck = currentKey;
 
-	//ajuste por parte da longitude, via codigo
-	if (dir == 'up') dir = 'back';
-	if (dir == 'down') dir = 'front';
+		//ajuste de direçoes
+		if (dir == 'up') dir = 'back';
+		if (dir == 'down') dir = 'front';
 
-	charStep++;
-	if (charStep == 5) charStep = 1;
+		charStep++;
+		if (charStep == 5) charStep = 1;
 
-	//Remove classe atual do personagem
-	$('#guildo').removeAttr('class');
+		//Remove classe atual do personagem
+		$('#guildo').removeAttr('class');
 
-	//Adiciona nova classe
-	switch(charStep) {
+		//Adiciona nova classe
+		switch(charStep) {
 
-		case 1: 
-			$('#guildo').addClass(dir+'-stand'); 
-
-			setTimeout(function() { 
-				charStep++;
-				if (charStep == 5) charStep = 1;
-				$('#guildo').removeAttr('class');
-				$('#guildo').addClass(dir+'-right'); 
-			}, (charSpeed/3));
-
-			setTimeout(function() { 
-				charStep++;
-				if (charStep == 5) charStep = 1;
-				$('#guildo').removeAttr('class');
+			case 1: 
 				$('#guildo').addClass(dir+'-stand'); 
-			}, ((charSpeed/3)*2));
-			break;
 
-		case 2: 
-			$('#guildo').addClass(dir+'-right');
-
-			setTimeout(function() { 
-				charStep++;
-				if (charStep == 5) charStep = 1;
-				$('#guildo').removeAttr('class');
-				$('#guildo').addClass(dir+'-stand'); 
-			}, (charSpeed/3));
-
-			setTimeout(function() { 
-				charStep++;
-				if (charStep == 5) charStep = 1;
-				$('#guildo').removeAttr('class');
-				$('#guildo').addClass(dir+'-left'); 
-			}, ((charSpeed/3)*2));
-			break;
-
-		case 3: 
-	      	$('#guildo').addClass(dir+'-stand');
-
-			setTimeout(function() { 
-				charStep++;
-				if (charStep == 5) charStep = 1;
-				$('#guildo').removeAttr('class');
-				$('#guildo').addClass(dir+'-left'); 
-			}, (charSpeed/3));
-
-			setTimeout(function() { 
-				charStep++;
-				if (charStep == 5) charStep = 1;
-				$('#guildo').removeAttr('class');
-				$('#guildo').addClass(dir+'-stand'); 
-				}, ((charSpeed/3)*2)); 
-	    	break;
-
-		case 4: 
-			$('#guildo').addClass(dir+'-left');
-
-			setTimeout(function() { 
-				charStep++;
-				if (charStep == 5) charStep = 1;
-				$('#guildo').removeAttr('class');
-				$('#guildo').addClass(dir+'-stand'); 
-				}, (charSpeed/3));
-
-			setTimeout(function() { 
-				charStep++;
-				if (charStep == 5) charStep = 1;
+				setTimeout(function() { 
+					charStep++;
+					if (charStep == 5) charStep = 1;
 					$('#guildo').removeAttr('class');
 					$('#guildo').addClass(dir+'-right'); 
+				}, (charSpeed/3));
+
+				setTimeout(function() { 
+					charStep++;
+					if (charStep == 5) charStep = 1;
+					$('#guildo').removeAttr('class');
+					$('#guildo').addClass(dir+'-stand'); 
 				}, ((charSpeed/3)*2));
-			break;
-	}
+				break;
 
+			case 2: 
+				$('#guildo').addClass(dir+'-right');
 
-	//Move personagem conforme direcao informada pela variavel dir
-	switch(dir) {
-		
-	    case 'front':
-		    if (chkMove(dir) == 'mapa') {
-		  		$('#mapa').animate({top: '-=32'}, charSpeed, "linear", function() {
-					charY++;
-					$('#top').html(charY);
-					$('#left').html(charX);
-		    		if (currentKey == currentKeyCheck) moveChar(dir);
-			  	});
-			} else if (chkMove(dir) == 'guildo') {
-		  		$('#guildo').animate({top: '+=32'}, charSpeed, "linear", function() {
-		  			charY++;
-					$('#top').html(charY);
-					$('#left').html(charX);
-			    	if (currentKey == currentKeyCheck) moveChar(dir);
-			  	});
-			}
-			break;
-			
-		case 'back':
-			if (chkMove(dir) == 'mapa') {
-				$('#mapa').animate({top: '+=32'}, charSpeed, "linear", function() {
-					charY--;
-					$('#top').html(charY);
-					$('#left').html(charX);
-					if (currentKey == currentKeyCheck) moveChar(dir);
-				});
-			}else if (chkMove(dir) == 'guildo') {
-				$('#guildo').animate({top: '-=32'}, charSpeed, "linear", function() {
-					charY--;
-					$('#top').html(charY);
-					$('#left').html(charX);
-					if (currentKey == currentKeyCheck) moveChar(dir);
-				});
-			}
-			break;
+				setTimeout(function() { 
+					charStep++;
+					if (charStep == 5) charStep = 1;
+					$('#guildo').removeAttr('class');
+					$('#guildo').addClass(dir+'-stand'); 
+				}, (charSpeed/3));
 
-		case 'left':
-			if (chkMove(dir) == 'mapa') {
-				$('#mapa').animate({left: '+=32'}, charSpeed, "linear", function() {
-					charX--;
-					$('#top').html(charY);
-					$('#left').html(charX);
-					if (currentKey == currentKeyCheck) moveChar(dir);
-				});
-			}
-			else if (chkMove(dir) == 'guildo') {
-				$('#guildo').animate({left: '-=32'}, charSpeed, "linear", function() {
-					charX--;
-					$('#top').html(charY);
-					$('#left').html(charX);
-					if (currentKey == currentKeyCheck) moveChar(dir);
-				});
-			}
-			break;
+				setTimeout(function() { 
+					charStep++;
+					if (charStep == 5) charStep = 1;
+					$('#guildo').removeAttr('class');
+					$('#guildo').addClass(dir+'-left'); 
+				}, ((charSpeed/3)*2));
+				break;
 
-		case'right':
-			if (chkMove(dir) == 'mapa') {
-				$('#mapa').animate({left: '-=32'}, charSpeed, "linear", function() {
-					charX++;
-					$('#top').html(charY);
-					$('#left').html(charX);
-					if (currentKey == currentKeyCheck) moveChar(dir);
-				});
-			}
-			else if (chkMove(dir) == 'guildo') {
-				$('#guildo').animate({left: '+=32'}, charSpeed, "linear", function() {
-					charX++;
-					$('#top').html(charY);
-					$('#left').html(charX);
-					if (currentKey == currentKeyCheck) moveChar(dir);
-				});
-			}
-			break;
+			case 3: 
+		      	$('#guildo').addClass(dir+'-stand');
 
-	}
+				setTimeout(function() { 
+					charStep++;
+					if (charStep == 5) charStep = 1;
+					$('#guildo').removeAttr('class');
+					$('#guildo').addClass(dir+'-left'); 
+				}, (charSpeed/3));
 
-}// fim da function moveChar()
+				setTimeout(function() { 
+					charStep++;
+					if (charStep == 5) charStep = 1;
+					$('#guildo').removeAttr('class');
+					$('#guildo').addClass(dir+'-stand'); 
+					}, ((charSpeed/3)*2)); 
+		    	break;
 
+			case 4: 
+				$('#guildo').addClass(dir+'-left');
+
+				setTimeout(function() { 
+					charStep++;
+					if (charStep == 5) charStep = 1;
+					$('#guildo').removeAttr('class');
+					$('#guildo').addClass(dir+'-stand'); 
+					}, (charSpeed/3));
+
+				setTimeout(function() { 
+					charStep++;
+					if (charStep == 5) charStep = 1;
+						$('#guildo').removeAttr('class');
+						$('#guildo').addClass(dir+'-right'); 
+					}, ((charSpeed/3)*2));
+				break;
+		}
+
+		//Move personagem conforme direcao informada pela variavel dir
+		/*
+		switch(dir) {
+				
+		    case 'front':
+		    	if( charX == 4 && charY == 2) return false;
+			    if (chkMove(dir) == 'mapa') {
+			  		$('#mapa').animate({top: '-=32'}, charSpeed, "linear", function() {
+						charY++;
+						$('#top').html(charY);
+						$('#left').html(charX);
+			    		// if (currentKey == currentKeyCheck) moveChar(dir);
+				  	});
+				} else if (chkMove(dir) == 'guildo') {
+			  		$('#guildo').animate({top: '+=32'}, charSpeed, "linear", function() {
+			  			charY++;
+						$('#top').html(charY);
+						$('#left').html(charX);
+				    	// if (currentKey == currentKeyCheck) moveChar(dir);
+				  	});
+				}
+				break;
+				
+			case 'back':
+				if( charX == 4 && charY == 4) return false;
+				if (chkMove(dir) == 'mapa') {
+					$('#mapa').animate({top: '+=32'}, charSpeed, "linear", function() {
+						charY--;
+						$('#top').html(charY);
+						$('#left').html(charX);
+						// if (currentKey == currentKeyCheck) moveChar(dir);
+					});
+				}else if (chkMove(dir) == 'guildo') {
+					$('#guildo').animate({top: '-=32'}, charSpeed, "linear", function() {
+						charY--;
+						$('#top').html(charY);
+						$('#left').html(charX);
+						// if (currentKey == currentKeyCheck) moveChar(dir);
+					});
+				}
+				break;
+
+			case 'left':
+				if( charX == 5 && charY == 3) return false;
+				if (chkMove(dir) == 'mapa') {
+					$('#mapa').animate({left: '+=32'}, charSpeed, "linear", function() {
+						charX--;
+						$('#top').html(charY);
+						$('#left').html(charX);
+						// if (currentKey == currentKeyCheck) moveChar(dir);
+					});
+				}
+				else if (chkMove(dir) == 'guildo') {
+					$('#guildo').animate({left: '-=32'}, charSpeed, "linear", function() {
+						charX--;
+						$('#top').html(charY);
+						$('#left').html(charX);
+						// if (currentKey == currentKeyCheck) moveChar(dir);
+					});
+				}
+				break;
+
+			case'right':
+				if( charX == 3 && charY == 3) return false;
+				if (chkMove(dir) == 'mapa') {
+					$('#mapa').animate({left: '-=32'}, charSpeed, "linear", function() {
+						charX++;
+						$('#top').html(charY);
+						$('#left').html(charX);
+						// if (currentKey == currentKeyCheck) moveChar(dir);
+					});
+				}
+				else if (chkMove(dir) == 'guildo') {
+					$('#guildo').animate({left: '+=32'}, charSpeed, "linear", function() {
+						charX++;
+						$('#top').html(charY);
+						$('#left').html(charX);
+						// if (currentKey == currentKeyCheck) moveChar(dir);
+					});
+				}
+				break;
+
+		}
+		*/
+
+	}// fim da function moveChar()
 
 
 	function chkMove(dir) {
