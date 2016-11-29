@@ -193,10 +193,10 @@
 			this.setNextStatement(true, null);
 			this.setColour(230);
 			this.setTooltip('Se há caminho na direção informada, então faça algumas ações');
-			this.setHelpUrl('http://www.w3schools.com/js/js_comparisons.asp');
+			this.setHelpUrl('https://github.com/google/blockly/wiki/IfElse');
 		}
 	};
-
+	
 	Blockly.Blocks['loop'] = {
 		init: function() {
 			this.appendDummyInput()
@@ -208,21 +208,22 @@
 			this.setNextStatement(true, null);
 			this.setColour(120);
 			this.setTooltip('');
-			this.setHelpUrl('http://www.w3schools.com/js/js_loop_while.asp');
+			this.setHelpUrl('https://github.com/google/blockly/wiki/Loops');
 		}
 	};
-
+	
+	//Mostra codigos gerados pela montagem dos blocos
 	function showCode(){
-
+		
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 		var codigo = Blockly.JavaScript.workspaceToCode(workspace);
 		alert(codigo);
-
+		
 	}
-
+	
 	//Executa codigos javascript gerados
 	function runCode(){
-
+		
 		window.LoopTrap = 1000;
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
@@ -247,11 +248,10 @@
 		$('#left').html(charX);
 
     	//Atualiza valores globais do jogo
-    	/*
 		setInterval(function(){
-			updateAllValues();
+			atualizaValores();
 		},3000);
-		*/
+		
 
 		$("#iniciar").on('click',function(){
 			runCode();
@@ -283,25 +283,25 @@
 				case 38: 
 					currentKey = 38;
 					moveChar('up');
-					notDone();
+					encontrouDestino();
 					break;
 
 				case 39:
 					currentKey = 39;
 					moveChar('right');
-					notDone();
+					encontrouDestino();
 					break;
 
 				case 40:
 					currentKey = 40;
 					moveChar('down');
-					notDone();
+					encontrouDestino();
 					break;
 
 				case 37:
 					currentKey = 37;
 					moveChar('left');
-					notDone();
+					encontrouDestino();
 					break;
 			}
 

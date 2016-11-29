@@ -18,9 +18,9 @@
 		var statements_fa_a = Blockly.JavaScript.statementToCode(block, 'FAÇA');
 		
 		if(dropdown_option == 'LEFT'){
-			var code = 'if (isPathLeft()){\n'+statements_fa_a+'}\n';
+			var code = 'if (existeCaminhoEsquerda()){\n'+statements_fa_a+'}\n';
 		}else{
-			var code = 'if (isPathRight()){\n'+statements_fa_a+'}\n';
+			var code = 'if (existeCaminhoDireita()){\n'+statements_fa_a+'}\n';
 		}
 
 		return code;
@@ -29,42 +29,42 @@
 	Blockly.JavaScript['loop'] = function(block) {
 
 		var statements_fa_a = Blockly.JavaScript.statementToCode(block, 'FAÇA');
-		var code = 'while(notDone()){\n '+statements_fa_a+'}\n';
+		var code = 'while(encontrouDestino()){\n '+statements_fa_a+'}\n';
 		return code;
 
 	};
 
 	Blockly.JavaScript['mover_cima'] = function(block) {
-		var code = "moveTop();\n";
+		var code = "moverTopo();\n";
 		return code;
 	};
 
 	Blockly.JavaScript['mover_baixo'] = function(block) {
-		var code = "moveBottom();\n";
+		var code = "moverBaixo();\n";
 		return code;
 	};
 
 	Blockly.JavaScript['mover_direita'] = function(block) {
-		var code = "moveRight();\n";
+		var code = "moverDireita();\n";
 		return code;
 	};
 
 	Blockly.JavaScript['mover_esquerda'] = function(block) {
-		var code = "moveLeft();\n";
+		var code = "moverEsquerda();\n";
 		return code;
 	};
 
 	Blockly.JavaScript['vire'] = function(block) {
 		var direcao = block.getFieldValue('VIRE');
 		if( direcao == 'LEFT' ){
-			var code = "turnLeft();\n";
+			var code = "vireEsquerda();\n";
 		}else{
-			var code = "turnRight();\n";
+			var code = "vireDireita();\n";
 		}
 		return code;
 	};
 
-	function moveRight(){
+	function moverDireita(){
 
 		$('#guildo').removeAttr('class').addClass('right-stand');
 		
@@ -90,7 +90,7 @@
 		}
 	}
 
-	function moveLeft(){
+	function moverEsquerda(){
 		
 		$('#guildo').removeAttr('class').addClass('left-stand');
 		
@@ -116,7 +116,7 @@
 		}
 	}
 
-	function moveTop(){
+	function moverTopo(){
 
 		$('#guildo').removeAttr('class').addClass('back-stand');
 		
@@ -143,7 +143,7 @@
 
 	}
 
-	function moveBottom(){
+	function moverBaixo(){
 		
 		$('#guildo').removeAttr('class').addClass('front-stand');
 		
@@ -169,18 +169,18 @@
 		}	
 	}
 
-	function turnLeft(){
+	function vireEsquerda(){
 		$('#guildo').removeAttr('class').addClass('left-stand');
 	}
 
-	function turnRight(){
+	function vireDireita(){
 		$('#guildo').removeAttr('class').addClass('right-stand');
 	}
 
-	function notDone(){
+	function encontrouDestino(){
 		
 		if( charX == 23 && charY == 5){
-			alert('Encontrou :)');
+			console.log('Encontrou :)');
 			return false;
 		}
 		else{
@@ -188,7 +188,7 @@
 		}
 	}
 
-	function isPathLeft(){
+	function existeCaminhoEsquerda(){
 		if( (charX > 24 || charX < 0) && (charY > 24 || charY < 0) ){
 			return false;
 		}else{
@@ -196,7 +196,7 @@
 		}
 	}
 
-	function isPathRight(){
+	function existeCaminhoEsquerda(){
 		if( (charX > 24 || charX < 0) && (charY > 24 || charY < 0) ){
 		 	return false;
 		}else{
@@ -205,7 +205,7 @@
 	}
 
 	//Restaurando valor inicial das variaveis setadas no localStorage
-	function updateAllValues() {
+	function atualizaValores() {
 		
 		if(!localStorage.getItem('pontuacao')){
 			localStorage.setItem('pontuacao', 0);
