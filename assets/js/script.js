@@ -1,11 +1,11 @@
 	var currentKey;
 	var charStep = 2; //1=1st foot, 2=stand, 3=2nd foot, 4=stand
 	var charSpeed = 400; //Velocidade de caminhada do personagem
-	
+
 	//Posicao x,y canvas
 	var charX = 4;//localStorage.getItem('charX');
 	var charY = 6;//localStorage.getItem('charY');
-	
+
 	//Variaveis globais do jogo
 	var stageWidth = 640;
 	var stageHeight = 480;
@@ -13,7 +13,7 @@
 	var mapHeight = 800;//altura do mapa
 	
 	Blockly.JavaScript['decisao'] = function(block) {
-		
+
 		var dropdown_option = block.getFieldValue('OPTION');
 		var statements_fa_a = Blockly.JavaScript.statementToCode(block, 'FAÇA');
 		
@@ -24,7 +24,8 @@
 		}
 		return code;
 	};
-	
+
+	/*
 	Blockly.JavaScript['loop'] = function(block) {
 
 		var statements_fa_a = Blockly.JavaScript.statementToCode(block, 'FAÇA');
@@ -32,6 +33,7 @@
 		return code;
 
 	};
+	*/
 
 	Blockly.JavaScript['mover_cima'] = function(block) {
 		var code = "moverTopo();\n";
@@ -210,7 +212,7 @@
 		if(!localStorage.getItem('percentual_vida')){
 			localStorage.setItem('percentual_vida', 100);
 		}
-
+		/*
 		if(!localStorage.getItem('charX')){
 			localStorage.setItem('charX', 4);
 		}
@@ -218,7 +220,7 @@
 		if(!localStorage.getItem('charY')){
 			localStorage.setItem('charY', 6);
 		}
-
+		*/
 		$("#pontuacao-atual").html( localStorage.getItem('pontuacao') );
 		$("#barra-vida").css("width", localStorage.getItem('percentual_vida')+"%");
 
@@ -246,14 +248,14 @@
 			case 1: 
 				$('#guildo').addClass(dir+'-stand'); 
 
-				setTimeout(function() { 
+				setTimeout(function(){
 					charStep++;
 					if (charStep == 5) charStep = 1;
 					$('#guildo').removeAttr('class');
 					$('#guildo').addClass(dir+'-right'); 
-				}, (charSpeed/3));
+				},(charSpeed/3));
 
-				setTimeout(function() { 
+				setTimeout(function(){
 					charStep++;
 					if (charStep == 5) charStep = 1;
 					$('#guildo').removeAttr('class');
