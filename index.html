@@ -113,9 +113,10 @@
 <script src="assets/components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="assets/js/script.js"></script>
 <script>
-	
+
 	//Load blocos de commandos do Blockly
 	var workspace = Blockly.inject('DivBlockly',{ toolbox: document.getElementById('toolbox') });
+
 	Blockly.JavaScript.addReservedWords('code','runCode','vire','loop','decisao','mover_cima','mover_baixo','mover_direita','mover_esquerda');
 
 	Blockly.Blocks['mover_cima'] = {
@@ -223,6 +224,7 @@
 	}
 	
 	//Executa codigos javascript gerados
+	
 	function runCode(){
 		
 		window.LoopTrap = 1000;
@@ -234,14 +236,19 @@
 		try {
 				
 			eval(runCode);
-				
+					
 		} catch (e) {
 			alert('Erro:'+e);
 		}
-					
+						
 	}
 
 	$(document).ready(function(){
+
+		$("#iniciar").on('click',function(){
+			runCode();
+		});
+
 
 		$('#guildo').addClass('front-stand');
 		$('#top').html(charY);
@@ -253,10 +260,6 @@
 			atualizaValores();
 		},3000);
 		*/
-
-		$("#iniciar").on('click',function(){
-			runCode();
-		});
 		
 		$("#reiniciar").on('click',function(){
 			
