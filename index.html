@@ -13,7 +13,7 @@
 <body>
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12 col-md-4">
+		<div style="display:none" class="col-xs-12 col-md-4">
 			<h4>Pontuação:
 				<div id="pontuacao-atual">0</div>
 			</h4>
@@ -38,7 +38,6 @@
 					<block type="mover_esquerda"></block>
 					<block type="vire"></block>
 					<block type="decisao"></block>
-					<block type="loop"></block>
 					<block type="controls_repeat_ext">
 						<value name="TIMES">
 							<block type="math_number">
@@ -46,6 +45,9 @@
 							</block>
 						</value>
 					</block>
+					<!--
+					<block type="loop"></block>
+					-->
 				</category>
 			</xml>
 		</div>
@@ -229,7 +231,6 @@
 		Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
 
 		var runCode = Blockly.JavaScript.workspaceToCode(workspace);
-		console.log(runCode);
 
 		try {
 				
@@ -238,7 +239,7 @@
 		} catch (e) {
 			alert('Erro:'+e);
 		}
-			
+					
 	}
 
 	$(document).ready(function(){
@@ -248,10 +249,11 @@
 		$('#left').html(charX);
 
     	//Atualiza valores globais do jogo
+    	/*
 		setInterval(function(){
 			atualizaValores();
 		},3000);
-		
+		*/
 
 		$("#iniciar").on('click',function(){
 			runCode();

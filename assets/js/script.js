@@ -29,7 +29,7 @@
 	Blockly.JavaScript['loop'] = function(block) {
 
 		var statements_fa_a = Blockly.JavaScript.statementToCode(block, 'FAÇA');
-		var code = 'while(encontrouDestino()){\n '+statements_fa_a+'}\n';
+		var code = 'if(!encontrouDestino()){\n '+statements_fa_a+'}\n';
 		return code;
 
 	};
@@ -178,12 +178,9 @@
 	}
 
 	function encontrouDestino(){
-		
-		if( charX == 23 && charY == 5){
-			console.log('Encontrou :)');
-			return false;
-		}
-		else{
+		if( (charX == 23) && (charY == 5)){
+			return true;
+		}else{
 			return false;
 		}
 	}
@@ -196,7 +193,7 @@
 		}
 	}
 
-	function existeCaminhoEsquerda(){
+	function existeCaminhoDireita(){
 		if( (charX > 24 || charX < 0) && (charY > 24 || charY < 0) ){
 		 	return false;
 		}else{
