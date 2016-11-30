@@ -1,11 +1,11 @@
 	var currentKey;
 	var charStep = 2; //1=1st foot, 2=stand, 3=2nd foot, 4=stand
 	var charSpeed = 400; //Velocidade de caminhada do personagem
-
-	//Position x e y canvas
+	
+	//Posicao x,y canvas
 	var charX = 4;//localStorage.getItem('charX');
 	var charY = 6;//localStorage.getItem('charY');
-
+	
 	//Variaveis globais do jogo
 	var stageWidth = 640;
 	var stageHeight = 480;
@@ -13,7 +13,7 @@
 	var mapHeight = 800;//altura do mapa
 	
 	Blockly.JavaScript['decisao'] = function(block) {
-
+		
 		var dropdown_option = block.getFieldValue('OPTION');
 		var statements_fa_a = Blockly.JavaScript.statementToCode(block, 'FAÇA');
 		
@@ -22,10 +22,9 @@
 		}else{
 			var code = 'if (existeCaminhoDireita()){\n'+statements_fa_a+'}\n';
 		}
-
 		return code;
 	};
-
+	
 	Blockly.JavaScript['loop'] = function(block) {
 
 		var statements_fa_a = Blockly.JavaScript.statementToCode(block, 'FAÇA');
@@ -144,7 +143,7 @@
 	}
 
 	function moverBaixo(){
-		
+			
 		$('#guildo').removeAttr('class').addClass('front-stand');
 		
 		var dir = 'down';
